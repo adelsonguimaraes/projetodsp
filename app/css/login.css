@@ -1,0 +1,9 @@
+.logo-sistema {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+.logo-sistema img {
+    height: 200px;
+    padding: 10px;
+}

@@ -1,0 +1,86 @@
+<div class="main-tarefa">
+    <div class="titulo">
+        <i id="menu" onClick="MyMenu.open()" title="Menu" class="fa fa-bars icon btn pull-left" style="cursor:pointer; font-size:25px;"></i>
+        <p>Minhas Tarefas</p>
+        <!-- <i id="search" title="Search" class="fa fa-search icon btn pull-right" style="cursor:pointer; font-size:25px;"></i> -->
+        <i id="listmode" ng-click="tipoVisualizacoes()" title="Filtros" class="fa fa-list-alt icon btn pull-right" style="cursor:pointer; font-size:25px;">
+            <div>
+                <ul>
+                    <li><a ng-click="setaTipoView('HOJE')">Hoje</a></li>
+                    <li><a ng-click="setaTipoView('AGRUPADO')">Agrupado</a></li>
+                    <li><a ng-click="setaTipoView('CRONOLOGICO')">Cronológico</a></li>
+                </ul>
+            </div>
+        </i>
+        <i id="refresh" title="Refresh" class="fa fa-refresh icon btn pull-right" ng-click="listarTarefas()" style="cursor:pointer; font-size:25px;"></i>
+    </div>
+    <div class="search-box">
+        <form ng-submit="filtrarMinhasTarefas(filtro)">
+            <div class="input-group">
+                <input type="text" id="filter" ng-model="filtro" class="form-control" placeholder="Filtrar...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="filtrarTarefasGestao(filtro)"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-default" ng-click="limparFiltro()"><i class="fa fa-close"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div id="init-text" class="alert alert-warning" align="center">Você não possui tarefas</div>
+    
+    <div ng-include="view.html"></div>
+    
+    <div id="details" class="details" ng-class="detailsClass">
+        <div class="return" ng-click="fecharDetalhes()">
+            <i class="fa fa-level-down"></i> Fechar detalhes
+        </div>
+        <div class="content">
+            <div class="header">Agenda {{detalhes.idagenda}}</div>
+            <div class="body">
+                <div style="background:#fff;">
+                    <span style="padding:5px;font-weight:bold;color:#484848;">{{detalhes.tipo}}</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">
+                        <b>Nome:</b> {{detalhes.nome}}<br>
+                        <b>Descrição:</b> {{detalhes.escopodescricao}}
+                    </div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Cliente</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">
+                        <span ng-bind-html="detalhes.cliente" ng-style="{color: (detalhes.cliente==='INDETERMINADO') ? '#d2d2d2' : ''}"></span><br>
+                    </div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Tarefa</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">
+                        <b>Nome:</b> {{detalhes.tarefa}}<br>
+                        <b>Observação:</b> <span ng-style="{color: !detalhes.observacao ? '#d2d2d2' : ''}"> {{detalhes.observacao | indefinido}}</span> <br>
+                    </div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Agendamento</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">
+                        <b>Início:</b> {{detalhes.data | data}} {{detalhes.horario}}<br>
+                        <b>Término:</b> {{detalhes.datafim | data}} {{detalhes.horariofim}}
+                    </div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Gestor</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">{{detalhes.gestor}}</div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Responsável</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">{{detalhes.responsavel}}</div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Membros</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">
+                        <span ng-repeat="membro in detalhes.equipe">{{membro.nome}}<br></span>
+                    </div>
+                    <span style="padding:5px;font-weight:bold;color:#484848;">Local</span>
+                    <div style="padding:2px 5px; border:1px solid #e6e6e6; margin-left: 5px;">{{detalhes.localinicio}}</div>
+                    <br>
+                    <div id="map" style="height:400px;padding: 10px 0px 11px 0px;" ng-if="geolocationIsValid(detalhes.geolocalinicio)"></div>
+                    <br>
+                </div>
+                <div class="footer">
+                    <a class="btn" id="opentimeline" ng-click="verOcorrencias(detalhes)">
+                        <i class="fa fa-comments-o"></i>
+                        <span style="color: red; font-size: 35px; font-weight: bold; position: absolute; top: 0px;" ng-if="detalhes.ocorrenciasnaolidas.length>0">!</span>
+                    </a>
+                    <a class="btn" ng-click="acaoTarefa(detalhes, $event)">
+                        <i class="fa" ng-class="statusTarefa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'app/views/timeline_sidebar.html'" ng-controller="timelinesidebarCtrl"></div>

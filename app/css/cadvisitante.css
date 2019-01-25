@@ -1,0 +1,413 @@
+.main-tarefa {
+    background: #fff;
+    width: 100%;
+}
+
+/* .main-tarefa .tarefas{ */
+    /* color: yellow; */
+/* } */
+
+.main-tarefa #listmode {
+    position: relative;
+}
+.main-tarefa #listmode div {
+    position: absolute;
+    background: #fff;
+    margin-top: -1px; 
+    margin-left: -70px;
+    border: 1px solid #999999;
+    display: none;
+}
+.main-tarefa #listmode div ul {
+    margin: 0;
+    padding: 0px 0px;
+    width: 150px;
+    list-style: none;
+}
+.main-tarefa #listmode div ul li h4 {
+    border-bottom: 1px solid #999999;
+}
+.main-tarefa #listmode div ul li a {
+    border-bottom: 1px solid #999999;
+    color: black;
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-tarefa .titulo {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    top:0;
+    /* padding: 15px 0; */
+    height: 55px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #a0a0a038;
+    background: #fff;
+    z-index: 3;
+    /* border-bottom-width: 1px; */
+}
+
+.main-tarefa p {
+    flex: 1;
+    padding: 16px 20px;
+}
+
+.main-tarefa .titulo .icon {
+    padding: 16px 15px;
+    /* display: inline-block; */
+}
+
+.main-tarefa .search-box {
+    margin-top: 55px;
+    width: 100%;
+    position: fixed;
+    padding: 5px;
+    background: #fff;
+    height: 40px;
+    z-index: 1;
+}
+
+.main-tarefa .tarefas {
+    margin-top: 45px;
+    /* padding-bottom: 100px; */
+    /* overflow: auto; */
+    /* position: absolute; */
+}
+
+.main-tarefa .tarefas div {
+    position: relative;
+    height: auto;
+    cursor: pointer;
+}
+
+.main-tarefa .tarefas ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0;
+}
+
+.main-tarefa .tarefas ul li {
+    /* display: flex; */
+    /* padding: 10px; */
+    position: relative;
+    /* height: 155px; */
+    height: auto;
+    /* background: olive; */
+    /* border: 5px solid #a0a0a038; */
+    cursor: pointer;
+}
+
+.main-tarefa .tarefas ul li .selecionado {
+    width: 0;
+	height: 0;
+	border-top: 60px solid #ffc1079e;
+    border-right: 60px solid transparent;
+    position: absolute;
+}
+
+/*Group*/
+.main-tarefa .group {
+    height: 53px;
+    padding:10px;
+    text-decoration:none;
+    color:black;
+    background:#e3e3e4ba;
+    /* border-bottom: 1px solid #00000017; */
+    display: flex;
+    overflow:hidden;
+}
+
+.main-tarefa .group div:nth-child(1) {
+    flex: 0.95;
+}
+
+.main-tarefa .group .info { 
+    height: 20px;
+    overflow: hidden;
+    display: block;
+}
+
+.main-tarefa .notificacao-ocorrencia {
+    position: absolute !important;
+    right: 31px;
+    top: 22px;
+    background: orange;
+}
+
+.main-tarefa .group .notificacao-ocorrencia a {
+    height: 50px;
+    width: 50px;
+    background: red;
+}
+
+.main-tarefa .header-footer {
+    display: flex;
+    padding: 2px 0px 3px 9px;
+    background: #bee5eb;
+    border-bottom: 1px solid #00000017;
+}
+.main-tarefa .header-footer a {
+    flex: 0.18;
+    padding: 2px;
+    color: #545454;
+    text-decoration: none;
+}
+.main-tarefa .header-footer a:nth-child(1) {
+    flex: 0.12;
+    padding: 2px;
+}
+
+.main-tarefa .tarefas ul li .block {
+    background:rgba(255, 255, 255, 0.78);
+    height:100%;
+    width:100%;
+    text-align:center;
+    position:absolute;
+    padding: 50px 0;
+    border-bottom: 1px solid #a0a0a038;
+}
+
+.main-tarefa .tarefas ul li .block a {
+    text-decoration: none;
+    color:black;
+    font-size:20px;
+    cursor:pointer;
+    padding: 40px 20px;
+}
+
+.main-tarefa .tarefas ul li .block a:hover {
+    color: #067b48;
+}
+
+.main-tarefa .tarefas ul li .block a i {
+    padding-left: 20px;
+}
+
+.main-tarefa .tarefas ul li .content {
+    display: flex;
+    padding: 3px 10px;
+    /* height: 120px; */
+    /* overflow: hidden; */
+    /* background: olive; */
+    /* border-bottom: 1px solid #a0a0a038; */
+}
+
+.main-tarefa .tarefas ul li .text {
+    /* padding: 5px; */
+    color: black;
+    font-size: 14px;
+    flex: 1;
+    width: 85%;
+    text-decoration: none;
+}
+
+.main-tarefa .tarefas ul li .text a {
+    color: black;
+    display: block;
+    height: 20px;
+    width: 300px;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.main-tarefa .tarefas ul li .content-rodape {
+    display: flex;
+    /* background: #fff; */
+    border-bottom: 1px solid #a0a0a038;
+    padding: 5px 10px;
+}
+
+.main-tarefa .tarefas ul li .content-rodape a {
+    color: #999999;
+    font-size: 14px;
+    font-weight: 200;
+    /* flex: 0.13; // icons */
+    flex: -0.86;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0px 5px 0px 5px;
+}
+
+.main-tarefa .tarefas ul li .content-rodape a .dificuldade-baixa {
+    color: hsl(209, 100%, 70%);
+    font-weight: bold;
+}
+
+.main-tarefa .tarefas ul li .content-rodape a .dificuldade-normal {
+    color: rgb(49, 204, 75);
+    font-weight: bold;
+}
+
+.main-tarefa .tarefas ul li .content-rodape a .dificuldade-moderado {
+    color: rgb(255, 196, 0);
+    font-weight: bold;
+}
+
+.main-tarefa .tarefas ul li .content-rodape a .dificuldade-grave {
+    color: rgb(209, 61, 61);
+    font-weight: bold;
+}
+.main-tarefa .tarefas ul li .group-btn {
+    flex: 0;
+    width: 45px;
+    padding-top: 22px;
+    padding-right: 5px;
+}
+.main-tarefa .tarefas ul li .group-btn i {
+    font-size: 50px;
+}
+.main-tarefa .tarefas ul li .group-btn .tarefa-iniciada {
+    color: #2196f3;
+}
+.main-tarefa .tarefas ul li .group-btn .tarefa-finalizada {
+    color: #4CAF50;
+}
+
+/* .main-tarefa .tarefas ul li button { */
+    /* height: 40px; */
+    /* width: 40px; */
+/* } */
+
+.main-tarefa .details {
+    height: 100%;
+    background: rgba(0, 0, 0, 0.747);
+    border-right: 1px solid #999999;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    z-index: 3;
+    cursor: pointer;
+    transition: all 330ms ease-out;
+    -webkit-transform: translateY(103%); /* esconde menu a direita */
+    transform: translateY(103%); /* esconde menu a direita */
+    pointer-events: none; /* desativa eventos */
+}
+
+.main-tarefa .show-details {
+    transition: all 130ms ease-in;
+    -webkit-transform: none; /* mostra timeline */
+    transform: none; /* mostra timeline */
+    pointer-events: auto; /* ativa eventos */
+}
+
+.main-tarefa .details .return {
+    padding: 15px;
+    color: #fff;
+    font-size: 20px;
+    /* text-align: center; */
+}
+
+.main-tarefa .details .content {
+    /* margin-top: 50px; */
+    height: 100%;
+    padding: 0px;
+    background: #fff;
+    /* overflow: auto; */
+}
+
+.main-tarefa .details .content .header{
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.main-tarefa .details .content .body {
+    width: 100%;
+    padding: 5px;
+    padding-bottom: 50px;
+    /* margin-bottom: 70px; */
+    font-size: 15px;
+    height: 86%;
+    overflow: auto;
+}
+
+.main-tarefa .details .content .footer {
+    bottom: 0;
+    position: fixed;
+    z-index: 1000;
+    /* height: 40px; */
+    border-top: 1px solid #999999;
+    border-right: 1px solid #999999;
+    background: #fff;
+    width: 100%;
+    display: flex;
+}
+
+.main-tarefa .details .content .footer a:nth-child(1) {
+    border-right: 1px solid #999999;
+}
+
+.main-tarefa .details .content .footer a {
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    flex: 1;
+}
+
+/*Rotação*/
+.spin {
+	-webkit-animation: rotation 4s infinite linear;
+}
+@-webkit-keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
+
+@media (min-width: 1020px) {
+    body {
+        overflow: hidden !important;
+    }
+    .main-tarefa {
+        width:400px;
+        /* position: fixed; */
+    }
+    .main-tarefa .search-box {
+        width:400px;
+    }
+    .main-tarefa .titulo {
+        width:400px;
+    }
+    .main-tarefa .tarefas {
+        height: 90vh !important;
+        /* padding-bottom: 100px; */
+        overflow: auto;
+    }
+    .main-tarefa .details {
+        width: 400px;
+    }
+    .main-tarefa .details .content .footer {
+        width: 400px;
+    }
+}
+
+@media (min-width: 1250px) {
+    .main-tarefa {
+        width:450px;
+    }
+    .main-tarefa .search-box {
+        width:450px;
+    }
+    .main-tarefa .titulo {
+        width:450px;
+    }
+    .main-tarefa .details {
+        width: 450px;
+    }
+    .main-tarefa .details .content .footer {
+        width: 450px;
+    }
+}
