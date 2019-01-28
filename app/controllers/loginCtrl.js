@@ -3,17 +3,14 @@ angular.module(module).controller('loginCtrl', function ($rootScope, $scope, $lo
     if ($rootScope.usuario) { $location.path("/tarefas"); return false; }
 
     $scope.obj = {
-        usuario: null,
+        cpf: null,
         senha: null,
         remember: null
     }
 
     $scope.logar = function(obj) {
 
-        console.log(obj);
-        return false;
-
-        if (obj.usuario === null || obj.senha === null) {
+        if (obj.cpf === null || obj.senha === null) {
             SweetAlert.swal({ html: true, title: "Atenção", text: 'Preencha corretamente os campos.', type: "error" });
             return false;
         }
@@ -21,7 +18,7 @@ angular.module(module).controller('loginCtrl', function ($rootScope, $scope, $lo
         $rootScope.loadon();
         
         var dataRequest = {
-            usuario: obj.usuario,
+            cpf: obj.cpf,
             senha: MD5(obj.senha),
             remember: obj.remember || false
         }

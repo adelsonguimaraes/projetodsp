@@ -1,6 +1,6 @@
 // configs
 const module = 'projetodps';
-const api = "http://api.akto.com.br/";
+const api = "./api/";
 const version = '1.0.3';
 // const api = "http://apidweb.solverp.com.br/";
 // const api = "http://apipweb.solverp.com.br/";

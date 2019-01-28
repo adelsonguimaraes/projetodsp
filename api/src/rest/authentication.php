@@ -36,6 +36,9 @@ function logar() {
     $pass= $data['senha'];
     $userName = $data['cpf']; 
 
+    var_dump($data);
+    exit;
+
     $userName = stripslashes ( strip_tags( trim( $userName ) ) ); 
     $pass = stripslashes ( strip_tags( trim( $pass ) ) ); 
 
