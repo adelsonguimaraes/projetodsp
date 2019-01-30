@@ -1,9 +1,7 @@
 // configs
 const module = 'projetodps';
-const api = "./api/";
+const api = "api/";
 const version = '1.0.3';
-// const api = "http://apidweb.solverp.com.br/";
-// const api = "http://apipweb.solverp.com.br/";
 
 (function () {
     angular.module(module, [
@@ -15,4 +13,16 @@ const version = '1.0.3';
         'ngSanitize',                    // ngSanitize
         'ps.inputTime'
     ]);
+
+    /* Service Worker */
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('./service-worker.js?' + moment().valueOf())
+            .then((reg) => {
+                console.log('Service Worker Registered');
+            })
+            .catch((err) => {
+                console.log('erro', err);
+            });
+    }
 })();

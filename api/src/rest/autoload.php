@@ -10,9 +10,6 @@
 
 // header('Content-type:application/json; charset=utf-8');
 
-echo 'aqui estamos agora nesse momento'; 
-exit;
-
 /* Trata $_POST */
 if(!$_POST){ $_POST =  file_get_contents ( "php://input" ); }
 $_POST = json_decode ($_POST, true);

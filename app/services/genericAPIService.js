@@ -1,14 +1,14 @@
-angular.module(module).service("genericAPI", function ($http) {
+angular.module(module).service("genericAPI", function ($http, $rootScope) {
 
     function _generic (data, scope) {
         return $http({
             method: 'POST',
             url: api + "src/rest/autoload.php",
             data: {
-                session: data.session,
                 metodo: data.metodo,
                 data: data.data,
-                class: data.class
+                class: data.class,
+                usuario: $rootScope.usuario
             }
         });
     };

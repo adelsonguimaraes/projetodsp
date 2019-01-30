@@ -1,6 +1,6 @@
 angular.module(module).controller('loginCtrl', function ($rootScope, $scope, $location, authenticationAPI, SweetAlert, $uibModal, $timeout) {
     //Verifica Sessao e permissão de acesso
-    if ($rootScope.usuario) { $location.path("/tarefas"); return false; }
+    if ($rootScope.usuario) { $location.path("/cadvisitante"); return false; }
 
     $scope.obj = {
         cpf: null,
@@ -31,11 +31,8 @@ angular.module(module).controller('loginCtrl', function ($rootScope, $scope, $lo
                 if (response.data.success == true) {
                     //criamos a session
                     authenticationAPI.createSession(response.data.data, dataRequest.remember);
-                    $rootScope.listarRotinas().then((result)=>{
-                        // $location.path('/' + $rootScope.rotinas[0].url);
-                        window.location.replace('#' + $rootScope.rotinas[0].url);
-                        $rootScope.loadoff();
-                    }); // listando rotinas
+                    $rootScope.loadoff();
+                    $location.path("/cadvisitante");
                 } else {
                     $rootScope.loadoff();
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
