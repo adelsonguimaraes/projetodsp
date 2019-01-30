@@ -34,7 +34,21 @@ function cadastrar () {
 		$data['cpfcnpj']
 	);
 	$control = new VisitanteControl($obj);
-	$response = $control->cadastrar();
+    $response = $control->cadastrar();
+    if ($response['success']===false) die(json_encode($response));
+
+    $idvisitante = $response['data'];
+
+    // visita
+    $visitaControl = new VisitaControl(
+        new Visita(
+            NULL, //id
+            new Visitante($idvisitante),
+            substr($data['data'], 0, 10),
+            $data['horario']
+        )
+    );
+    $response = $visitaControl->cadastrar();
 	echo json_encode($response);
 }
 function buscarPorId () {
