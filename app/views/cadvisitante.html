@@ -6,12 +6,12 @@
                 <h4>Visitante</h4>
                 <hr>
                 <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" ng-required="true">
+                    <label for="cpf">CPF/CNPJ:</label>
+                    <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" validarcpf ng-blur="verificaUsuario(obj)" ng-model="obj.cpfcnpj" ng-required="true">
                 </div>
                 <div class="form-group">
-                    <label for="nome">CPF/CNPJ:</label>
-                    <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" ng-model="obj.cpfcnpj" ng-required="true">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" ng-required="true">
                 </div>
             </section>
             <section>
@@ -26,7 +26,10 @@
                     <input type="time" class="form-control" id="horario" name="horario" ng-model="obj.horario" ng-required="true">
                 </div>
             </section>
-            <button type="submit" class="btn btn-default pull-right" ng-disabled="cadForm.$invalid" ng-click="cadastrar(obj)">Salvar</button>
+            <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-danger" ng-click="logout()">Sair</button>
+                <button type="submit" class="btn btn-default" ng-disabled="cadForm.$invalid" ng-click="cadastrar(obj)">Salvar</button>
+            </div>
         </form>
     </section>
 </div>

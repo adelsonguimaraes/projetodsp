@@ -11,6 +11,9 @@ switch ($_POST['metodo']) {
 	case 'buscarPorId':
 		buscarPorId();
 		break;
+	case 'buscarPorCpfCnpj':
+		buscarPorCpfCnpj();
+		break;
 	case 'listar':
 		listar();
 		break;
@@ -25,26 +28,32 @@ switch ($_POST['metodo']) {
 function cadastrar () {
     $data = $_POST['data'];
     $usuario = $_POST['usuario'];
-    
-    $obj = new Visitante(
-		NULL,
-		$usuario['idpessoa'],
-        $usuario['idlocal'],
-        $data['nome'],
-		$data['cpfcnpj']
-	);
-	$control = new VisitanteControl($obj);
-    $response = $control->cadastrar();
-    if ($response['success']===false) die(json_encode($response));
 
-    $idvisitante = $response['data'];
+	$idvisitante = $data['idvisitante'];
+	if ($idvisitante===0) {
+
+		$obj = new Visitante(
+			NULL,
+			$usuario['idpessoa'],
+			$usuario['idlocal'],
+			$data['nome'],
+			$data['cpfcnpj']
+		);
+		$control = new VisitanteControl($obj);
+		$response = $control->cadastrar();
+		if ($response['success']===false) die(json_encode($response));
+
+		$idvisitante = $response['data'];
+	}
+
 
     // visita
     $visitaControl = new VisitaControl(
         new Visita(
             NULL, //id
             new Visitante($idvisitante),
-            substr($data['data'], 0, 10),
+			// substr($data['data'], 0, 10),
+			$data['data'],
             $data['horario']
         )
     );
@@ -59,6 +68,14 @@ function buscarPorId () {
 		echo json_encode($obj);
 	}
 }
+
+function buscarPorCpfCnpj () {
+	$data = $_POST['data'];
+	$control = new VisitanteControl();
+	$resp = $control->buscarPorCpfCnpj($data['cpfcnpj']);
+	echo json_encode($resp);
+}
+
 function listar () {
 	$control = new VisitanteControl(new Visitante);
 	$lista = $control->listar();

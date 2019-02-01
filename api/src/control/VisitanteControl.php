@@ -21,6 +21,9 @@ Class VisitanteControl {
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
+	function buscarPorCpfCnpj ($cpfcnpj) {
+		return $this->objDAO->buscarPorCpfCnpj($cpfcnpj);
+	}
 	function listar () {
 		return $this->objDAO->listar();
 	}
