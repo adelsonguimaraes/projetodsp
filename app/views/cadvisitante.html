@@ -1,24 +1,28 @@
 <div class="container">
     <div ng-include="'app/views/common/header.html'"></div>
-    <section>
+    <section ng-if="!novo">
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
-                    <tr>
+                    <tr ng-repeat="obj in visitantes">
                         <td>Nome</td>
                         <td>Documento</td>
+                        <td>Ações</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr obj in visitantes>
-                        <td>obj.nome</td>
-                        <td>obj.documento</td>
+                        <td>{{obj.nome}}</td>
+                        <td>{{obj.documento}}</td>
+                        <td>
+                            <button class="btn btn-info"><i class="fa fa-calendar"></i></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </section>
-    <section style="padding:10px;">
+    <section style="padding:10px;"  ng-if="novo">
         <form name="cadForm">
             <section>
                 <h4>Visitante</h4>

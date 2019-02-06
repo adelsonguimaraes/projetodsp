@@ -3,6 +3,7 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
     if (!$rootScope.usuario) { $location.path("/login"); return false; }
 
     $scope.title = 'Cadastro de Visita';
+    $scope.novo = false;
 
     $scope.obj = {
         idvisitante: 0,
