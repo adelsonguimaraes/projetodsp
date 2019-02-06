@@ -17,8 +17,11 @@ class VisitaDAO
     //cadastrar
     function cadastrar (Visita $obj) {
        
-        $this->sql = sprintf("INSERT INTO visita(idvisitante, data, horario)
-        VALUES(%d, %d, '%s')",
+        $this->sql = sprintf("INSERT INTO visita(idpessoa, idtipovisita, idlocal, idvisitante, data, horario)
+        VALUES(%d, %d, %d, %d, '%s', '%s')",
+            mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
+            mysqli_real_escape_string($this->con, $obj->getIdtipovisita()),
+            mysqli_real_escape_string($this->con, $obj->getIdlocal()),
             mysqli_real_escape_string($this->con, $obj->getObjvisitante()->getId()),
             mysqli_real_escape_string($this->con, $obj->getData()),
             mysqli_real_escape_string($this->con, $obj->getHorario()));
@@ -40,7 +43,10 @@ class VisitaDAO
     //atualizar
     function atualizar (Visita $obj) {
         
-        $this->sql = sprintf("UPDATE visita SET idvisitante = %d, data = '%s', horario = '%s', dataedicao = curdate() WHERE id = %d ",
+        $this->sql = sprintf("UPDATE visita SET idpessoa = %d, idtipovisita = %d, idlocal = %d, idvisitante = %d, data = '%s', horario = '%s', dataedicao = curdate() WHERE id = %d ",
+            mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
+            mysqli_real_escape_string($this->con, $obj->getIdtipovisita()),
+            mysqli_real_escape_string($this->con, $obj->getIdlocal()),
             mysqli_real_escape_string($this->con, $obj->getObjvisitante()->getId()),
             mysqli_real_escape_string($this->con, $obj->getData()),
             mysqli_real_escape_string($this->con, $obj->getHorario()),

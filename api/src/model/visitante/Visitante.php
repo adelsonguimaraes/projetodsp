@@ -16,7 +16,7 @@ Class Visitante implements JsonSerializable {
     private $idpessoa;
     private $idlocal;
     private $nome;
-    private $cpfcnpj;
+    private $documento;
     private $datacadastro;
     private $dataedicao;
 
@@ -27,7 +27,7 @@ Class Visitante implements JsonSerializable {
         $idpessoa = NULL,
         $idlocal = NULL,
         $nome = NULL,
-        $cpfcnpj = NULL,
+        $documento = NULL,
         $datacadastro = NULL,
         $dataedicao = NULL
     )
@@ -36,7 +36,7 @@ Class Visitante implements JsonSerializable {
         $this->idpessoa = $idpessoa;
         $this->idlocal = $idlocal;
         $this->nome = $nome;
-        $this->cpfcnpj = $cpfcnpj;
+        $this->documento = $documento;
         $this->datacadastro = $datacadastro;
         $this->dataedicao   = $dataedicao;
     }
@@ -70,11 +70,11 @@ Class Visitante implements JsonSerializable {
         $this->nome = $nome;
         return $this;
     }
-    public function getCpfcnpj() {
-        return $this->cpfcnpj;
+    public function getDocumento() {
+        return $this->documento;
     }
-    public function setCpfcnpj($cpfcnpj) {
-        $this->cpfcnpj = $cpfcnpj;
+    public function setDocumento($documento) {
+        $this->documento = $documento;
         return $this;
     }
     public function getDatacadastro() {
@@ -99,7 +99,7 @@ Class Visitante implements JsonSerializable {
             "idpessoa"   => $this->idpessoa,
             "idlocal" => $this->idlocal,
             "nome"   => $this->nome,
-            "cpfcnpj" => $this->cpfcnpj,
+            "documento" => $this->documento,
             "datacadastro"  => $this->datacadastro,
             "dataedicao"    => $this->dataedicao
         ];

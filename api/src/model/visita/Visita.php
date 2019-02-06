@@ -13,7 +13,11 @@
 Class Visita implements JsonSerializable {
     //atributos
     private $id;
+    private $idpessoa;
+    private $idtipovisita;
+    private $idlocal;
     private $objvisitante;
+    private $idspirit;
     private $data;
     private $horario;
     private $datacadastro;
@@ -23,7 +27,11 @@ Class Visita implements JsonSerializable {
     public function __construct
     (
         $id = NULL,
+        $idpessoa = NULL,
+        $idtipovisita = NULL,
+        $idlocal = NULL,
         Visitante $objvisitante = NULL,
+        $idspirit = NULL,
         $data = NULL,
         $horario = NULL,
         $datacadastro = NULL,
@@ -31,7 +39,11 @@ Class Visita implements JsonSerializable {
     )
     {
         $this->id   = $id;
+        $this->idpessoa = $idpessoa;
+        $this->idtipovisita = $idtipovisita;
+        $this->idlocal;
         $this->objvisitante = $objvisitante;
+        $this->idspirit = $idspirit;
         $this->data = $data;
         $this->horario = $horario;
         $this->datacadastro = $datacadastro;
@@ -46,11 +58,39 @@ Class Visita implements JsonSerializable {
         $this->id = $id;
         return $this;
     }
+    public function getIdpessoa() {
+        return $this->idpessoa;
+    }
+    public function setIdpessoa($idpessoa) {
+        $this->idpessoa = $idpessoa;
+        return $this;
+    }
+    public function getIdtipovisita() {
+        return $this->idtipovisita;
+    }
+    public function setIdtipovisita($idtipovisita) {
+        $this->idtipovisita = $idtipovisita;
+        return $this;
+    }
+    public function getIdlocal() {
+        return $this->idlocal;
+    }
+    public function setIdlocal($idlocal) {
+        $this->idlocal = $idlocal;
+        return $this;
+    }
     public function getObjvisitante() {
         return $this->objvisitante;
     }
     public function setObjvisitante($objvisitante) {
         $this->objvisitante = $objvisitante;
+        return $this;
+    }
+    public function getIdspirit() {
+        return $this->idspirit;
+    }
+    public function setIdspirit($idspirit) {
+        $this->idspirit = $idspirit;
         return $this;
     }
     public function getData() {
@@ -86,7 +126,10 @@ Class Visita implements JsonSerializable {
     public function JsonSerialize () {
         return [
             "id"    => $this->id,
+            "idpessoa" => $this->idpessoa,
+            "idtipovisita" => $this->idtipovisita,
             "objvisitante"   => $this->objvisitante,
+            "idspirit" => $this->idspirit,
             "data" => $this->data,
             "horario"   => $this->horario,
             "datacadastro"  => $this->datacadastro,

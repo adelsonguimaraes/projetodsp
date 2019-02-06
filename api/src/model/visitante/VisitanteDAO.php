@@ -17,7 +17,7 @@ class VisitanteDAO
     //cadastrar
     function cadastrar (Visitante $obj) {
        
-        $this->sql = sprintf("INSERT INTO visitante(idpessoa, idlocal, nome, cpfcnpj)
+        $this->sql = sprintf("INSERT INTO visitante(idpessoa, idlocal, nome, documento)
         VALUES(%d, %d, '%s', '%s')",
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
             mysqli_real_escape_string($this->con, $obj->getIdlocal()),
@@ -41,7 +41,7 @@ class VisitanteDAO
     //atualizar
     function atualizar (Visitante $obj) {
         
-        $this->sql = sprintf("UPDATE visitante SET idpessoa = %d, idlocal = %d, nome = '%s', cpfcnpj = '%s', dataedicao = curdate() WHERE id = %d ",
+        $this->sql = sprintf("UPDATE visitante SET idpessoa = %d, idlocal = %d, nome = '%s', documento = '%s', dataedicao = curdate() WHERE id = %d ",
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
             mysqli_real_escape_string($this->con, $obj->getIdlocal()),
             mysqli_real_escape_string($this->con, $obj->getNome()),
