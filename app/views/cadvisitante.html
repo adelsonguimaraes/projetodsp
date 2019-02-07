@@ -10,6 +10,7 @@
                     <tr>
                         <td align="left">Nome</td>
                         <td align="left">Documento</td>
+                        <td align="left">Última Visita</td>
                         <td align="left">Ações</td>
                     </tr>
                 </thead>
@@ -17,24 +18,26 @@
                     <tr ng-repeat="obj in visitantes">
                         <td align="right">{{obj.nome}}</td>
                         <td align="right">{{obj.documento}}</td>
+                        <td align="right">{{obj.ultimavisita | datahora}}</td>
                         <td>
                             <button class="btn btn-warning" ng-click="editar(obj)"><i class="fa fa-calendar"></i></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>    </section>
+        </div>    
+    </section>
     <section style="padding:10px;" ng-if="novo">
         <form name="cadForm">
             <section>
                 <h4>Visitante</h4>
                 <hr>
                 <div class="form-group">
-                    <label for="nome">Nome:</label>
+                    <label for="nome">Nome <span style="color:red;">*</span></label>
                     <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" placeholder="Informe o nome do Visitante" ng-required="true">
                 </div>
                 <div class="form-group">
-                    <label for="cpf">Documento:</label>
+                    <label for="cpf">Documento</label>
                     <input type="text" class="form-control" id="documento" name="documento" ng-model="obj.documento" placeholder="Informe o documento do Visitante" ng-required="true">
                 </div>
             </section>
@@ -42,15 +45,15 @@
                 <h4>Agenda</h4>
                 <hr>
                 <div class="form-group">
-                    <label for="nome">Tipo de Visita:</label>
+                    <label for="nome">Tipo de Visita <span style="color:red;">*</span></label>
                     <select class="form-control" name="tipovisita" id="tipovisita" ng-model="obj.idtipovisita" ng-options="obj.id as obj.descricao for obj in tiposvisita"></select>
                 </div>
                 <div class="form-group">
-                    <label for="nome">Data:</label>
+                    <label for="nome">Data <span style="color:red;">*</span></label>
                     <input type="date" class="form-control" id="data" name="data" ng-model="obj.data" ng-required="true">
                 </div>
                 <div class="form-group">
-                    <label for="nome">Horário:</label>
+                    <label for="nome">Horário <span style="color:red;">*</span></label>
                     <input type="time" class="form-control" id="horario" name="horario" ng-model="obj.horario" ng-required="true">
                 </div>
             </section>

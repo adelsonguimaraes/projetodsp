@@ -41,7 +41,7 @@ Class Visita implements JsonSerializable {
         $this->id   = $id;
         $this->idpessoa = $idpessoa;
         $this->idtipovisita = $idtipovisita;
-        $this->idlocal;
+        $this->idlocal  = $idlocal;
         $this->objvisitante = $objvisitante;
         $this->idspirit = $idspirit;
         $this->data = $data;
@@ -128,6 +128,7 @@ Class Visita implements JsonSerializable {
             "id"    => $this->id,
             "idpessoa" => $this->idpessoa,
             "idtipovisita" => $this->idtipovisita,
+            "idlocal"   => $this->idlocal,
             "objvisitante"   => $this->objvisitante,
             "idspirit" => $this->idspirit,
             "data" => $this->data,

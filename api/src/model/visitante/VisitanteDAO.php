@@ -17,10 +17,8 @@ class VisitanteDAO
     //cadastrar
     function cadastrar (Visitante $obj) {
        
-        $this->sql = sprintf("INSERT INTO visitante(idpessoa, idlocal, nome, documento)
-        VALUES(%d, %d, '%s', '%s')",
-            mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
-            mysqli_real_escape_string($this->con, $obj->getIdlocal()),
+        $this->sql = sprintf("INSERT INTO visitante(nome, documento)
+        VALUES('%s', '%s')",
             mysqli_real_escape_string($this->con, $obj->getNome()),
             mysqli_real_escape_string($this->con, $obj->getDocumento()));
             // mysqli_real_escape_string($this->con, $obj->getAtivo()));
@@ -41,9 +39,7 @@ class VisitanteDAO
     //atualizar
     function atualizar (Visitante $obj) {
         
-        $this->sql = sprintf("UPDATE visitante SET idpessoa = %d, idlocal = %d, nome = '%s', documento = '%s', dataedicao = curdate() WHERE id = %d ",
-            mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
-            mysqli_real_escape_string($this->con, $obj->getIdlocal()),
+        $this->sql = sprintf("UPDATE visitante SET nome = '%s', documento = '%s', dataedicao = curdate() WHERE id = %d ",
             mysqli_real_escape_string($this->con, $obj->getNome()),
             mysqli_real_escape_string($this->con, $obj->getDocumento()),
             mysqli_real_escape_string($this->con, $obj->getId()));
@@ -139,7 +135,10 @@ class VisitanteDAO
     /* -- Listar Todos -- */
     function listar()
     {
-        $this->sql = "SELECT * from visitante";
+        $this->sql = "SELECT v.*, concat(vt.`data`, ' ', vt.horario) as 'ultimavisita'
+        from visitante v
+        left join visita vt on vt.idpessoa";
+        
         $result = mysqli_query($this->con, $this->sql);
 
         $this->superdao->resetResponse();

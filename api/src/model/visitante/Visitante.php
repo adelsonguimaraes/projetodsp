@@ -13,8 +13,6 @@
 Class Visitante implements JsonSerializable {
     //atributos
     private $id;
-    private $idpessoa;
-    private $idlocal;
     private $nome;
     private $documento;
     private $datacadastro;
@@ -24,8 +22,6 @@ Class Visitante implements JsonSerializable {
     public function __construct
     (
         $id = NULL,
-        $idpessoa = NULL,
-        $idlocal = NULL,
         $nome = NULL,
         $documento = NULL,
         $datacadastro = NULL,
@@ -33,8 +29,6 @@ Class Visitante implements JsonSerializable {
     )
     {
         $this->id   = $id;
-        $this->idpessoa = $idpessoa;
-        $this->idlocal = $idlocal;
         $this->nome = $nome;
         $this->documento = $documento;
         $this->datacadastro = $datacadastro;
@@ -47,20 +41,6 @@ Class Visitante implements JsonSerializable {
     }
     public function setId($id) {
         $this->id = $id;
-        return $this;
-    }
-    public function getIdpessoa() {
-        return $this->idpessoa;
-    }
-    public function setIdpessoa($idpessoa) {
-        $this->idpessoa = $idpessoa;
-        return $this;
-    }
-    public function getIdlocal() {
-        return $this->idlocal;
-    }
-    public function setIdlocal($idlocal) {
-        $this->idlocal = $idlocal;
         return $this;
     }
     public function getNome() {
@@ -96,8 +76,6 @@ Class Visitante implements JsonSerializable {
     public function JsonSerialize () {
         return [
             "id"    => $this->id,
-            "idpessoa"   => $this->idpessoa,
-            "idlocal" => $this->idlocal,
             "nome"   => $this->nome,
             "documento" => $this->documento,
             "datacadastro"  => $this->datacadastro,

@@ -27,15 +27,13 @@ switch ($_POST['metodo']) {
 
 function cadastrar () {
     $data = $_POST['data'];
-    $usuario = $_POST['usuario'];
+	$usuario = $_POST['usuario'];
 
 	$idvisitante = $data['idvisitante'];
 	if ($idvisitante===0) {
 
 		$obj = new Visitante(
 			NULL,
-			$usuario['idpessoa'],
-			$usuario['idlocal'],
 			$data['nome'],
 			$data['documento']
 		);
@@ -51,8 +49,11 @@ function cadastrar () {
     $visitaControl = new VisitaControl(
         new Visita(
             NULL, //id
-            new Visitante($idvisitante),
-			// substr($data['data'], 0, 10),
+			$usuario['idpessoa'],
+			$data['idtipovisita'],
+			$usuario['idlocal'],
+			new Visitante($idvisitante),
+			NULL,
 			$data['data'],
             $data['horario']
         )
