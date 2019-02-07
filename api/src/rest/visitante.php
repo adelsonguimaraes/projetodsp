@@ -37,7 +37,7 @@ function cadastrar () {
 			$usuario['idpessoa'],
 			$usuario['idlocal'],
 			$data['nome'],
-			$data['cpfcnpj']
+			$data['documento']
 		);
 		$control = new VisitanteControl($obj);
 		$response = $control->cadastrar();
@@ -77,7 +77,7 @@ function buscarPorCpfCnpj () {
 }
 
 function listar () {
-	$control = new VisitanteControl(new Visitante);
+	$control = new VisitanteControl();
 	$lista = $control->listar();
 	if(!empty($lista)) {
 		echo json_encode($lista);
@@ -90,7 +90,7 @@ function atualizar () {
 		$usuario['idpessoa'],
         $usuario['idlocal'],
         $data['nome'],
-		$data['cpfcnpj']
+		$data['documento']
 	);
 	$control = new VisitanteControl($obj);
 	$response = $control->atualizar();

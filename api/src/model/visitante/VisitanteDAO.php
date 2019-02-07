@@ -22,7 +22,7 @@ class VisitanteDAO
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
             mysqli_real_escape_string($this->con, $obj->getIdlocal()),
             mysqli_real_escape_string($this->con, $obj->getNome()),
-            mysqli_real_escape_string($this->con, $obj->getCpfcnpj()));
+            mysqli_real_escape_string($this->con, $obj->getDocumento()));
             // mysqli_real_escape_string($this->con, $obj->getAtivo()));
 
         $this->superdao->resetResponse();
@@ -45,7 +45,7 @@ class VisitanteDAO
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
             mysqli_real_escape_string($this->con, $obj->getIdlocal()),
             mysqli_real_escape_string($this->con, $obj->getNome()),
-            mysqli_real_escape_string($this->con, $obj->getCpfcnpj()),
+            mysqli_real_escape_string($this->con, $obj->getDocumento()),
             mysqli_real_escape_string($this->con, $obj->getId()));
         
         $this->superdao->resetResponse();
@@ -137,17 +137,9 @@ class VisitanteDAO
     }
 
     /* -- Listar Todos -- */
-    function listarTodos()
+    function listar()
     {
-        $this->sql = "SELECT usu.*, vp.id AS 'idpessoa', vp.tipo, vp.idpjpf AS 'idpessofisica', vp.nome, vp.cpfcnpj AS 'cpf', vp.email1, vp.celular, p.nome AS 'perfil', IFNULL(vpcol.nome, 'NENHUM') AS 'colegio'";
-        $this->sql .= " FROM visitante usu";
-        $this->sql .= " INNER JOIN view_pessoa vp ON vp.idpjpf = usu.idpessoafisica AND vp.tipo = 'PF'";
-        $this->sql .= " LEFT JOIN colegiovisitante colu ON colu.idvisitante = usu.id";
-        $this->sql .= " LEFT JOIN colegio col ON col.id = colu.idcolegio";
-        $this->sql .= " LEFT JOIN view_pessoa vpcol ON vpcol.idpjpf = col.idpessoajuridica AND vpcol.tipo = 'PJ'";
-        $this->sql .= " INNER JOIN perfil p ON p.id = usu.idperfil";
-        $this->sql .= " WHERE usu.ativo = 'SIM'";
-        $this->sql .= " ORDER BY usu.id DESC";
+        $this->sql = "SELECT * from visitante";
         $result = mysqli_query($this->con, $this->sql);
 
         $this->superdao->resetResponse();
@@ -162,8 +154,6 @@ class VisitanteDAO
             $this->superdao->setData( $this->lista );
         }
         return $this->superdao->getResponse();
-
-        return $this->lista;
     }
 
     // function listarInativos () {

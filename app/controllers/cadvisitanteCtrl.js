@@ -7,20 +7,24 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
 
     $scope.obj = {
         idvisitante: 0,
+        idtipovisita: 0,
         nome: '',
-        cpfcnpj: '',
-        data: '',
-        horario: '',
+        documento: '',
+        data: new Date(),
+        horario: new Date(moment().format('YYYY-MM-DD HH:mm')),
     }
 
-    $rootScope.listarTarefas = function () {
-        // verificando se o filtro está preenchido
-        if ($scope.filtro !== "") {
-            $scope.filtrarMinhasTarefas($scope.filtro);
-            return false;
-        }
-        
-        var data = { "metodo": "listarMinhasTarefas", "data": '', "class": "agenda", request: 'GET' };
+    $scope.novo = false;
+    $scope.cadNovo = function () {
+        $scope.novo = true;
+    }
+    $scope.cancelaNovo = function () {
+        $scope.novo = false;
+    }
+
+    $scope.visitantes = [];
+    $scope.listarVisitantes = function () {
+        var data = { "metodo": "listar", "data": '', "class": "visitante", request: 'GET' };
 
         $rootScope.loadon();
 
@@ -28,9 +32,7 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
             .then(function successCallback(response) {
                 //se o sucesso === true
                 if (response.data.success == true) {
-                    $scope.tarefasOrigem = response.data.data;
-                    $scope.tarefas = grouped(response.data.data);
-                    $scope.setaTipoView($scope.view.tipo);
+                    $scope.visitantes = response.data.data;
                     $rootScope.loadoff();
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
@@ -39,6 +41,29 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                 //error
             });	
     }
+    $scope.listarVisitantes();
+
+    $scope.tiposvisita = [];
+    $scope.listarTipoVisitas = function () {
+        var data = { "metodo": "listar", "data": '', "class": "tipovisita", request: 'GET' };
+
+        $rootScope.loadon();
+
+        genericAPI.generic(data)
+            .then(function successCallback(response) {
+                //se o sucesso === true
+                if (response.data.success == true) {
+                    $scope.tiposvisita = response.data.data;
+                    $scope.obj.idtipovisita = $scope.tiposvisita[0].id;
+                    $rootScope.loadoff();
+                } else {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                }
+            }, function errorCallback(response) {
+                //error
+            });
+    }
+    $scope.listarTipoVisitas();
 
     // veirificando se o usuário já existe
     $scope.verificaUsuario = function (obj) {

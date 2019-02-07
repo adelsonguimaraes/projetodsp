@@ -1,44 +1,50 @@
 <div class="container">
     <div ng-include="'app/views/common/header.html'"></div>
     <section ng-if="!novo">
+        <div style="padding:0 0 5px 0;">
+            <button class="btn btn-success" ng-click="cadNovo()"><i class="fa fa-plus"></i> <b>Novo</b></button>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
-                    <tr ng-repeat="obj in visitantes">
-                        <td>Nome</td>
-                        <td>Documento</td>
-                        <td>Ações</td>
+                    <tr>
+                        <td align="left">Nome</td>
+                        <td align="left">Documento</td>
+                        <td align="left">Ações</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr obj in visitantes>
-                        <td>{{obj.nome}}</td>
-                        <td>{{obj.documento}}</td>
+                    <tr ng-repeat="obj in visitantes">
+                        <td align="right">{{obj.nome}}</td>
+                        <td align="right">{{obj.documento}}</td>
                         <td>
-                            <button class="btn btn-info"><i class="fa fa-calendar"></i></button>
+                            <button class="btn btn-warning" ng-click="editar(obj)"><i class="fa fa-calendar"></i></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </section>
-    <section style="padding:10px;"  ng-if="novo">
+        </div>    </section>
+    <section style="padding:10px;" ng-if="novo">
         <form name="cadForm">
             <section>
                 <h4>Visitante</h4>
                 <hr>
                 <div class="form-group">
-                    <label for="cpf">CPF/CNPJ:</label>
-                    <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" validarcpf ng-blur="verificaUsuario(obj)" ng-model="obj.cpfcnpj" ng-required="true">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" placeholder="Informe o nome do Visitante" ng-required="true">
                 </div>
                 <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" ng-required="true">
+                    <label for="cpf">Documento:</label>
+                    <input type="text" class="form-control" id="documento" name="documento" ng-model="obj.documento" placeholder="Informe o documento do Visitante" ng-required="true">
                 </div>
             </section>
             <section>
                 <h4>Agenda</h4>
                 <hr>
+                <div class="form-group">
+                    <label for="nome">Tipo de Visita:</label>
+                    <select class="form-control" name="tipovisita" id="tipovisita" ng-model="obj.idtipovisita" ng-options="obj.id as obj.descricao for obj in tiposvisita"></select>
+                </div>
                 <div class="form-group">
                     <label for="nome">Data:</label>
                     <input type="date" class="form-control" id="data" name="data" ng-model="obj.data" ng-required="true">
@@ -49,8 +55,9 @@
                 </div>
             </section>
             <div class="btn-group pull-right">
-                <button type="submit" class="btn btn-danger" ng-click="logout()">Sair</button>
-                <button type="submit" class="btn btn-default" ng-disabled="cadForm.$invalid" ng-click="cadastrar(obj)">Salvar</button>
+                <!-- <button type="submit" class="btn btn-danger" ng-click="logout()">Sair</button> -->
+                <button type="button" class="btn btn-danger" ng-click="cancelaNovo()">Cancelar</button>
+                <button type="button" class="btn btn-default" ng-disabled="cadForm.$invalid" ng-click="cadastrar(obj)">Salvar</button>
             </div>
         </form>
     </section>
