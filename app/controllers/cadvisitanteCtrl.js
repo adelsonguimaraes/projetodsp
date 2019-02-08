@@ -52,6 +52,27 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
     }
     $scope.listarVisitantes();
 
+    $scope.visitas = [];
+    $scope.listarVisitas = function () {
+        var data = { "metodo": "listar", "data": '', "class": "visita", request: 'GET' };
+
+        $rootScope.loadon();
+
+        genericAPI.generic(data)
+            .then(function successCallback(response) {
+                //se o sucesso === true
+                if (response.data.success == true) {
+                    $scope.visitas = response.data.data;
+                    $rootScope.loadoff();
+                } else {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                }
+            }, function errorCallback(response) {
+                //error
+            });
+    }
+    $scope.listarVisitas();
+
     $scope.tiposvisita = [];
     $scope.listarTipoVisitas = function () {
         var data = { "metodo": "listar", "data": '', "class": "tipovisita", request: 'GET' };
@@ -73,37 +94,6 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
             });
     }
     $scope.listarTipoVisitas();
-
-    // // veirificando se o usuário já existe
-    // $scope.verificaUsuario = function (obj) {
-    //     if (obj.cpfcnpj === undefined || obj.cpfcnpj === '') return false;
-    //     if (valCPF(obj.cpfcnpj)) {
-    //         var data = {
-    //             "metodo": "buscarPorCpfCnpj",
-    //             "data": obj,
-    //             "class": "visitante"
-    //         };
-
-    //         $rootScope.loadon();
-
-    //         genericAPI.generic(data)
-    //             .then(function successCallback(response) {
-    //                 //se o sucesso === true
-    //                 if (response.data.success == true) {
-    //                     if (response.data.data!==null) {
-    //                         $scope.obj.nome = response.data.data.nome;
-    //                         $scope.obj.idvisitante = response.data.data.id;
-    //                         SweetAlert.swal({ html: true, title: "Atenção", text: "Visitante já cadastrado nesse Local, dados recuperados, siga com o agendamento.", type: "info" });
-    //                     }
-    //                     $rootScope.loadoff();
-    //                 } else {
-    //                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
-    //                 }
-    //             }, function errorCallback(response) {
-    //                 //error
-    //             });	
-    //     }
-    // }
 
     $scope.cadastrar = function (obj) {
         
@@ -139,6 +129,14 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
             }, function errorCallback(response) {
                 //error
             });	
+    }
+
+    $scope.reagendar = function (obj) {
+        console.log(obj);
+    }
+    
+    $scope.deletar = function (obj) {
+        console.log(obj);
     }
 
 });

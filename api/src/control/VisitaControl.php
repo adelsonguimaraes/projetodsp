@@ -21,8 +21,8 @@ Class VisitaControl {
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
-	function listar () {
-		return $this->objDAO->listar();
+	function listar ($idpessoa) {
+		return $this->objDAO->listar($idpessoa);
 	}
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);

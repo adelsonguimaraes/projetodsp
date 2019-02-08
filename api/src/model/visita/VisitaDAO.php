@@ -119,17 +119,14 @@ class VisitaDAO
     }
 
     /* -- Listar Todos -- */
-    function listarTodos()
+    function listar($idpessoa)
     {
-        $this->sql = "SELECT usu.*, vp.id AS 'idpessoa', vp.tipo, vp.idpjpf AS 'idpessofisica', vp.nome, vp.cpfcnpj AS 'cpf', vp.email1, vp.celular, p.nome AS 'perfil', IFNULL(vpcol.nome, 'NENHUM') AS 'colegio'";
-        $this->sql .= " FROM visita usu";
-        $this->sql .= " INNER JOIN view_pessoa vp ON vp.idpjpf = usu.idpessoafisica AND vp.tipo = 'PF'";
-        $this->sql .= " LEFT JOIN colegiovisita colu ON colu.idvisita = usu.id";
-        $this->sql .= " LEFT JOIN colegio col ON col.id = colu.idcolegio";
-        $this->sql .= " LEFT JOIN view_pessoa vpcol ON vpcol.idpjpf = col.idpessoajuridica AND vpcol.tipo = 'PJ'";
-        $this->sql .= " INNER JOIN perfil p ON p.id = usu.idperfil";
-        $this->sql .= " WHERE usu.ativo = 'SIM'";
-        $this->sql .= " ORDER BY usu.id DESC";
+        $this->sql = "SELECT v.*, tv.descricao as 'tipovisita', vis.nome as 'visitante', vis.documento as 'visitantedocumento'
+        from visita v
+        inner join tipovisita tv on tv.id = v.idtipovisita
+        inner join visitante vis on vis.id = v.idvisitante
+        where v.idpessoa = $idpessoa
+        order by v.data asc, v.horario asc";
         $result = mysqli_query($this->con, $this->sql);
 
         $this->superdao->resetResponse();
@@ -147,35 +144,6 @@ class VisitaDAO
 
         return $this->lista;
     }
-
-    // function listarInativos () {
-    //     $this->sql = "SELECT usu.*, vp.id AS 'idpessoa', vp.tipo, vp.idpjpf AS 'idpessofisica', vp.nome, vp.cpfcnpj AS 'cpf', vp.email1, vp.celular, p.nome AS 'perfil', IFNULL(vpcol.nome, 'NENHUM') AS 'colegio'";
-    //     $this->sql .= " FROM visita usu";
-    //     $this->sql .= " INNER JOIN view_pessoa vp ON vp.idpjpf = usu.idpessoafisica AND vp.tipo = 'PF'";
-    //     $this->sql .= " LEFT JOIN colegiovisita colu ON colu.idvisita = usu.id";
-    //     $this->sql .= " LEFT JOIN colegio col ON col.id = colu.idcolegio";
-    //     $this->sql .= " LEFT JOIN view_pessoa vpcol ON vpcol.idpjpf = col.idpessoajuridica AND vpcol.tipo = 'PJ'";
-    //     $this->sql .= " INNER JOIN perfil p ON p.id = usu.idperfil";
-    //     $this->sql .= " WHERE usu.ativo = 'NAO'";
-    //     $this->sql .= " ORDER BY usu.id DESC";
-
-    //     $result = mysqli_query($this->con, $this->sql);
-
-    //     $this->superdao->resetResponse();
-
-    //     if(!$result) {
-    //         $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Pessoa' , 'Listar' ) );
-    //     }else{
-    //         while($row = mysqli_fetch_assoc($result)) {
-    //            array_push($this->lista, $row);
-    //         }
-    //         $this->superdao->setSuccess( true );
-    //         $this->superdao->setData( $this->lista );
-    //     }
-    //     return $this->superdao->getResponse();
-
-    //     return $this->lista;
-    // }
 
     function listarPaginado($start, $limit)
     {
