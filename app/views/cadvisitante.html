@@ -54,7 +54,7 @@
                         <td align="left">{{obj.documento}}</td>
                         <!-- <td align="right">{{obj.ultimavisita | datahora}}</td> -->
                         <td>
-                            <button class="btn btn-warning" ng-click="editar(obj)"><i class="fa fa-calendar"></i></button>
+                            <button class="btn btn-warning" ng-click="novoAgendamento(obj)"><i class="fa fa-calendar"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -69,11 +69,11 @@
                 <hr>
                 <div class="form-group">
                     <label for="nome">Nome <span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" placeholder="Informe o nome do Visitante" ng-required="true">
+                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" placeholder="Informe o nome do Visitante" ng-required="true" ng-disabled="edicao">
                 </div>
                 <div class="form-group">
                     <label for="cpf">Documento</label>
-                    <input type="text" class="form-control" id="documento" name="documento" ng-model="obj.documento" placeholder="Informe o documento do Visitante" ng-required="true">
+                    <input type="text" class="form-control" id="documento" name="documento" ng-model="obj.documento" placeholder="Informe o documento do Visitante" ng-required="true" ng-disabled="edicao">
                 </div>
             </section>
             <section>

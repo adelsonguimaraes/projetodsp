@@ -126,6 +126,7 @@ class VisitaDAO
         inner join tipovisita tv on tv.id = v.idtipovisita
         inner join visitante vis on vis.id = v.idvisitante
         where v.idpessoa = $idpessoa
+        -- group by vis.id
         order by v.data asc, v.horario asc";
         $result = mysqli_query($this->con, $this->sql);
 

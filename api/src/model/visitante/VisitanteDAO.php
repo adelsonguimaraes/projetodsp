@@ -133,12 +133,10 @@ class VisitanteDAO
     }
 
     /* -- Listar Todos -- */
-    function listar()
+    function listar($idpessoa)
     {
-        $this->sql = "SELECT v.*, concat(vt.`data`, ' ', vt.horario) as 'ultimavisita'
-        from visitante v
-        left join visita vt on vt.idpessoa";
-        
+        $this->sql = "SELECT v.* from visitante v";
+
         $result = mysqli_query($this->con, $this->sql);
 
         $this->superdao->resetResponse();

@@ -14,16 +14,19 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
         horario: new Date(moment().format('YYYY-MM-DD HH:mm')),
     }
 
+    $scope.edicao = false;
+
     $scope.novo = false;
     $scope.cadNovo = function () {
         $scope.novo = true;
     }
     $scope.cancelaNovo = function () {
         $scope.novo = false;
-
+        $scope.edicao = false;
+        
         $scope.obj = {
             idvisitante: 0,
-            idtipovisita: 0,
+            idtipovisita: $scope.tiposvisita[0].id,
             nome: '',
             documento: '',
             data: new Date(),
@@ -123,6 +126,8 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                     SweetAlert.swal({ html: true, title: "Sucesso", text: 'Visita cadastrada com sucesso!', type: "success" });
 
                     $scope.cancelaNovo();
+                    $scope.listarVisitantes();
+                    $scope.listarVisitas();
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
                 }
@@ -130,6 +135,33 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                 //error
             });	
     }
+
+    $scope.novoAgendamento = function (obj) {
+        SweetAlert.swal({
+            title: "Atenção",
+            text: "Deseja agendar uma nova visita?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#5cb85c",
+            confirmButtonText: "Sim, desejo!",
+            cancelButtonText: "Não, cancele!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+            function (isConfirm) {
+                // swal.close();
+                if (isConfirm) {
+                    $scope.edicao = true;
+                    $scope.novo = true;
+                    
+                    $scope.obj.idvisitante = obj.id;
+                    $scope.obj.nome = obj.nome;
+                    $scope.obj.documento = obj.documento;
+                    $scope.obj.idtipovisita = $scope.tiposvisita[0].id;
+                }
+            }
+        );
+    };
 
     $scope.reagendar = function (obj) {
         console.log(obj);

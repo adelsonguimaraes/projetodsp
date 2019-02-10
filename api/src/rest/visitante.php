@@ -78,8 +78,11 @@ function buscarPorCpfCnpj () {
 }
 
 function listar () {
+	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
+
 	$control = new VisitanteControl();
-	$lista = $control->listar();
+	$lista = $control->listar($usuario['idpessoa']);
 	if(!empty($lista)) {
 		echo json_encode($lista);
 	}
