@@ -20,6 +20,7 @@ Class Visita implements JsonSerializable {
     private $idspirit;
     private $data;
     private $horario;
+    private $ativo;
     private $datacadastro;
     private $dataedicao;
 
@@ -34,6 +35,7 @@ Class Visita implements JsonSerializable {
         $idspirit = NULL,
         $data = NULL,
         $horario = NULL,
+        $ativo = NULL,
         $datacadastro = NULL,
         $dataedicao = NULL
     )
@@ -46,6 +48,7 @@ Class Visita implements JsonSerializable {
         $this->idspirit = $idspirit;
         $this->data = $data;
         $this->horario = $horario;
+        $this->ativo = $ativo;
         $this->datacadastro = $datacadastro;
         $this->dataedicao   = $dataedicao;
     }
@@ -107,6 +110,13 @@ Class Visita implements JsonSerializable {
         $this->horario = $horario;
         return $this;
     }
+    public function getAtivo() {
+        return $this->ativo;
+    }
+    public function setAtivo($ativo) {
+        $this->ativo = $ativo;
+        return $this;
+    }
     public function getDatacadastro() {
         return $this->datacadastro;
     }
@@ -133,6 +143,7 @@ Class Visita implements JsonSerializable {
             "idspirit" => $this->idspirit,
             "data" => $this->data,
             "horario"   => $this->horario,
+            "ativo" => $this->ativo,
             "datacadastro"  => $this->datacadastro,
             "dataedicao"    => $this->dataedicao
         ];

@@ -27,8 +27,8 @@
                         <td align="leftleft">{{obj.visitantedocumento}}</td>
                         <td align="leftleft">{{obj.tipovisita}}</td>
                         <td>
-                            <button type="button" class="btn btn-warning" ng-click="reagendar(obj)"><i class="fa fa-calendar"></i></button>
-                            <button type="button" class="btn btn-danger" ng-click="deletar(obj)"><i class="fa fa-trash"></i></button>
+                            <!-- <button type="button" class="btn btn-warning" ng-click="reagendar(obj)"><i class="fa fa-calendar"></i></button> -->
+                            <button type="button" class="btn btn-danger" ng-click="desativarVisita(obj)"><i class="fa fa-ban"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -69,7 +69,7 @@
                 <hr>
                 <div class="form-group">
                     <label for="nome">Nome <span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" placeholder="Informe o nome do Visitante" ng-required="true" ng-disabled="edicao">
+                    <input type="text" class="form-control" id="nome" name="nome" ng-model="obj.nome" placeholder="Informe o nome do Visitante" ng-required="true" ng-disabled="edicao" ng-blur="verificaVisitante(obj)">
                 </div>
                 <div class="form-group">
                     <label for="cpf">Documento</label>

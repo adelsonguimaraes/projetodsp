@@ -43,13 +43,14 @@ class VisitaDAO
     //atualizar
     function atualizar (Visita $obj) {
         
-        $this->sql = sprintf("UPDATE visita SET idpessoa = %d, idtipovisita = %d, idlocal = %d, idvisitante = %d, data = '%s', horario = '%s', dataedicao = curdate() WHERE id = %d ",
+        $this->sql = sprintf("UPDATE visita SET idpessoa = %d, idtipovisita = %d, idlocal = %d, idvisitante = %d, data = '%s', horario = '%s', ativo = '%s', dataedicao = curdate() WHERE id = %d ",
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
             mysqli_real_escape_string($this->con, $obj->getIdtipovisita()),
             mysqli_real_escape_string($this->con, $obj->getIdlocal()),
             mysqli_real_escape_string($this->con, $obj->getObjvisitante()->getId()),
             mysqli_real_escape_string($this->con, $obj->getData()),
             mysqli_real_escape_string($this->con, $obj->getHorario()),
+            mysqli_real_escape_string($this->con, $obj->getAtivo()),
             mysqli_real_escape_string($this->con, $obj->getId()));
         
         $this->superdao->resetResponse();
@@ -125,7 +126,7 @@ class VisitaDAO
         from visita v
         inner join tipovisita tv on tv.id = v.idtipovisita
         inner join visitante vis on vis.id = v.idvisitante
-        where v.idpessoa = $idpessoa
+        where v.idpessoa = $idpessoa and v.ativo = 'SIM'
         -- group by vis.id
         order by v.data asc, v.horario asc";
         $result = mysqli_query($this->con, $this->sql);

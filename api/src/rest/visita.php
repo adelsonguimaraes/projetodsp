@@ -63,14 +63,15 @@ function atualizar () {
 	$usuario = $_POST['usuario'];
 
 	$obj = new Visita(
-		$data['idvisita'], //id
+		$data['id'], //id
 		$usuario['idpessoa'],
 		$data['idtipovisita'],
 		$usuario['idlocal'],
 		new Visitante($data['idvisitante']),
 		NULL,
 		$data['data'],
-		$data['horario']
+		$data['horario'],
+		$data['ativo']
 	);
 	$control = new VisitaControl($obj);
 	$response = $control->atualizar();
