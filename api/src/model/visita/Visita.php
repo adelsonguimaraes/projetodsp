@@ -33,9 +33,10 @@ Class Visita implements JsonSerializable {
         $idlocal = NULL,
         Visitante $objvisitante = NULL,
         $idspirit = NULL,
-        $data = NULL,
+        $datainicio = NULL,
+        $datafim = NULL,
         $horario = NULL,
-        $ativo = NULL,
+        $status = NULL,
         $datacadastro = NULL,
         $dataedicao = NULL
     )
@@ -46,9 +47,10 @@ Class Visita implements JsonSerializable {
         $this->idlocal  = $idlocal;
         $this->objvisitante = $objvisitante;
         $this->idspirit = $idspirit;
-        $this->data = $data;
+        $this->datainicio = $datainicio;
+        $this->datafim = $datafim;
         $this->horario = $horario;
-        $this->ativo = $ativo;
+        $this->status = $status;
         $this->datacadastro = $datacadastro;
         $this->dataedicao   = $dataedicao;
     }
@@ -96,11 +98,18 @@ Class Visita implements JsonSerializable {
         $this->idspirit = $idspirit;
         return $this;
     }
-    public function getData() {
-        return $this->data;
+    public function getDatainicio() {
+        return $this->datainicio;
     }
-    public function setData($data) {
-        $this->data = $data;
+    public function setDatainicio($datainicio) {
+        $this->datainicio = $datainicio;
+        return $this;
+    }
+    public function getDatafim() {
+        return $this->datafim;
+    }
+    public function setDatafim($datafim) {
+        $this->datafim = $datafim;
         return $this;
     }
     public function getHorario() {
@@ -110,11 +119,11 @@ Class Visita implements JsonSerializable {
         $this->horario = $horario;
         return $this;
     }
-    public function getAtivo() {
-        return $this->ativo;
+    public function getStatus() {
+        return $this->status;
     }
-    public function setAtivo($ativo) {
-        $this->ativo = $ativo;
+    public function setStatus($status) {
+        $this->status = $status;
         return $this;
     }
     public function getDatacadastro() {

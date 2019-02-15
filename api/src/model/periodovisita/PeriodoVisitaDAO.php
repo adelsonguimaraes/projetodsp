@@ -1,6 +1,6 @@
 <?php
 
-class VisitaDAO
+class PeriodovisitaDAO
 {
     private $con;
     private $sql;
@@ -11,21 +11,16 @@ class VisitaDAO
     function __construct($con)
     {
         $this->con = $con;
-        $this->superdao = new SuperDAO('visita');
+        $this->superdao = new SuperDAO('periodovisita');
     }
 
     //cadastrar
-    function cadastrar (Visita $obj) {
+    function cadastrar (Periodovisita $obj) {
        
-        $this->sql = sprintf("INSERT INTO visita(idpessoa, idtipovisita, idlocal, idvisitante, datainicio, datafim, horario)
-        VALUES(%d, %d, %d, %d, '%s', '%s', '%s')",
-            mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
-            mysqli_real_escape_string($this->con, $obj->getIdtipovisita()),
-            mysqli_real_escape_string($this->con, $obj->getIdlocal()),
-            mysqli_real_escape_string($this->con, $obj->getObjvisitante()->getId()),
-            mysqli_real_escape_string($this->con, $obj->getDatainicio()),
-            mysqli_real_escape_string($this->con, $obj->getDatafim()),
-            mysqli_real_escape_string($this->con, $obj->getHorario()));
+        $this->sql = sprintf("INSERT INTO periodovisita(idvisita, dia)
+        VALUES(%d, '%s')",
+            mysqli_real_escape_string($this->con, $obj->getIdvisita()),
+            mysqli_real_escape_string($this->con, $obj->getDia()));
             // mysqli_real_escape_string($this->con, $obj->getAtivo()));
 
         $this->superdao->resetResponse();
@@ -42,17 +37,11 @@ class VisitaDAO
     }
 
     //atualizar
-    function atualizar (Visita $obj) {
+    function atualizar (Periodovisita $obj) {
         
-        $this->sql = sprintf("UPDATE visita SET idpessoa = %d, idtipovisita = %d, idlocal = %d, idvisitante = %d, data = '%s', horario = '%s', ativo = '%s', dataedicao = curdate() WHERE id = %d ",
-            mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
-            mysqli_real_escape_string($this->con, $obj->getIdtipovisita()),
-            mysqli_real_escape_string($this->con, $obj->getIdlocal()),
-            mysqli_real_escape_string($this->con, $obj->getObjvisitante()->getId()),
-            mysqli_real_escape_string($this->con, $obj->getDatainicio()),
-            mysqli_real_escape_string($this->con, $obj->getDatafim()),
-            mysqli_real_escape_string($this->con, $obj->getHorario()),
-            mysqli_real_escape_string($this->con, $obj->getStatus()),
+        $this->sql = sprintf("UPDATE periodovisita SET idpessoa = %d, idvisita = %d, dia = '%s' WHERE id = %d ",
+            mysqli_real_escape_string($this->con, $obj->getIdvisita()),
+            mysqli_real_escape_string($this->con, $obj->getDia()),
             mysqli_real_escape_string($this->con, $obj->getId()));
         
         $this->superdao->resetResponse();
@@ -69,7 +58,7 @@ class VisitaDAO
     
 
     //deletar
-    function deletar (Visita $obj) {
+    function deletar (Periodovisita $obj) {
         $this->superdao->resetResponse();
 
         // buscando por dependentes
@@ -82,7 +71,7 @@ class VisitaDAO
         // $this->sql = sprintf("DELETE FROM visita WHERE id = %d",
         //     mysqli_real_escape_string($this->con, $obj->getId()));
 
-         $this->sql = sprintf("UPDATE visita SET ativo = 'NAO' WHERE id = %d",
+         $this->sql = sprintf("UPDATE periodovisita SET ativo = 'NAO' WHERE id = %d",
             mysqli_real_escape_string($this->con, $obj->getId()));
         $result = mysqli_query($this->con, $this->sql);
 
@@ -98,9 +87,9 @@ class VisitaDAO
     }
 
     /* -- Buscar por ID -- */
-    function buscarPorID(Visita $obj)
+    function buscarPorID(Periodovisita $obj)
     {
-        $this->sql = sprintf("SELECT * FROM visita WHERE id = %d",
+        $this->sql = sprintf("SELECT * FROM periodovisita WHERE id = %d",
             mysqli_real_escape_string($this->con, $obj->getId()));
         $result = mysqli_query($this->con, $this->sql);
 
@@ -125,12 +114,12 @@ class VisitaDAO
     function listar($idpessoa)
     {
         $this->sql = "SELECT v.*, tv.descricao as 'tipovisita', vis.nome as 'visitante', vis.documento as 'visitantedocumento'
-        from visita v
+        from periodovisita v
         inner join tipovisita tv on tv.id = v.idtipovisita
         inner join visitante vis on vis.id = v.idvisitante
-        where v.idpessoa = $idpessoa and curdate() between v.datainicio and ifnull(v.datafim, v.datainicio)
+        where v.idpessoa = $idpessoa and v.ativo = 'SIM'
         -- group by vis.id
-        order by v.datainicio asc, v.horario asc";
+        order by v.data asc, v.horario asc";
         $result = mysqli_query($this->con, $this->sql);
 
         $this->superdao->resetResponse();
@@ -151,7 +140,7 @@ class VisitaDAO
 
     function listarPaginado($start, $limit)
     {
-        $this->sql = "SELECT * FROM visita LIMIT " . $start . ", " . $limit;
+        $this->sql = "SELECT * FROM periodovisita LIMIT " . $start . ", " . $limit;
         $result = mysqli_query($this->con, $this->sql);
         if (!$result) {
             die ('[ERRO]: ' . mysqli_error($this->con));
@@ -164,7 +153,7 @@ class VisitaDAO
 
     function qtdTotal()
     {
-        $this->sql = "SELECT count(*) as quantidade FROM visita";
+        $this->sql = "SELECT count(*) as quantidade FROM periodovisita";
         $result = mysqli_query($this->con, $this->sql);
         if (!$result) {
             die ('[ERRO]: ' . mysqli_error($this->con));
@@ -178,10 +167,10 @@ class VisitaDAO
     }
 
     /* -- Listar Por Nome -- */
-    function listarPorNome(Visita $obj)
+    function listarPorNome(Periodovisita $obj)
     {
         /* -- SQL PASSANDO COM %s(String do sprtintf) o percente % do LIKE -- */
-        $this->sql = sprintf("SELECT * FROM visita WHERE nome like '%s%s%s' ",
+        $this->sql = sprintf("SELECT * FROM periodovisita WHERE nome like '%s%s%s' ",
             mysqli_real_escape_string($this->con, '%'),
             mysqli_real_escape_string($this->con, $obj->getNome()),
             mysqli_real_escape_string($this->con, '%'));
@@ -197,7 +186,7 @@ class VisitaDAO
             $perfilControl = new PerfilControl ($perfil);
             $perfil = $perfilControl->buscarPorId();
 
-            $this->obj = new Visita ($row->id, $row->nome, $row->visita, $row->senha, $row->email, $row->ativo, $row->telefone, $row->datacadastro, $row->dataedicao, $perfil);
+            $this->obj = new Periodovisita ($row->id, $row->nome, $row->visita, $row->senha, $row->email, $row->ativo, $row->telefone, $row->datacadastro, $row->dataedicao, $perfil);
 
             $this->lista [] = $this->obj;
         }
