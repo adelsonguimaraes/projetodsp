@@ -10,8 +10,10 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
         idtipovisita: 0,
         nome: '',
         documento: '',
-        data: new Date(),
+        datainicio: new Date(),
+        datafim: new Date(),
         horario: new Date(moment().format('YYYY-MM-DD HH:mm')),
+        
     }
 
     $scope.edicao = false;
