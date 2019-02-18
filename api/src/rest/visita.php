@@ -14,6 +14,9 @@ switch ($_POST['metodo']) {
 	case 'listar':
 		listar();
 		break;
+	case 'historico':
+		historico();
+		break;
 	case 'atualizar':
 		atualizar();
 		break;
@@ -58,6 +61,14 @@ function listar () {
 	$lista = $control->listar($usuario['idpessoa']);
 	echo json_encode($lista);
 }
+function historico () {
+	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
+
+	$control = new VisitaControl();
+	$lista = $control->historico($data['idvisitante']);
+	echo json_encode($lista);
+}
 function atualizar () {
 	$data = $_POST['data'];
 	$usuario = $_POST['usuario'];
@@ -69,9 +80,10 @@ function atualizar () {
 		$usuario['idlocal'],
 		new Visitante($data['idvisitante']),
 		NULL,
-		$data['data'],
+		$data['datainicio'],
+		$data['datafim'],
 		$data['horario'],
-		$data['ativo']
+		$data['status']
 	);
 	$control = new VisitaControl($obj);
 	$response = $control->atualizar();

@@ -293,12 +293,11 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
     }
 
     $scope.novoAgendamento = function (obj) {
-
         for (i of $scope.visitas) {
-            if (+i.idvisitante === +obj.id) {
-                SweetAlert.swal({ html: true, title: "Atenção", text: "Este visitante já possui uma visita ativa, será necessário desativar a visita para criar uma nova!", type: "error" });
-                return false;
-            }
+            // if (+i.idvisitante === +obj.idvisitante) {
+            //     SweetAlert.swal({ html: true, title: "Atenção", text: "Este visitante já possui uma visita ativa, será necessário desativar a visita para criar uma nova!", type: "error" });
+            //     return false;
+            // }
         }
 
         SweetAlert.swal({
@@ -328,12 +327,12 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
     $scope.desativarVisita = function (obj) {
         SweetAlert.swal({
             title: "Atenção",
-            text: "Deseja desativar está visita?",
+            text: "Deseja cancelar está visita?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#5cb85c",
-            confirmButtonText: "Sim, desejo!",
-            cancelButtonText: "Não, cancele!",
+            confirmButtonText: "Sim, cancele!",
+            cancelButtonText: "Não, mantenha!",
             closeOnConfirm: false,
             closeOnCancel: true
         },
@@ -343,7 +342,7 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                     var copy = angular.copy(obj);
                     copy.data = moment(obj.data).format('YYYY-MM-DD');
                     copy.horario = moment(obj.horario, 'HH:mm:ss').format('HH:mm:ss');
-                    copy.ativo = "NAO";
+                    copy.status = "CANCELADO";
 
                     var data = {
                         "metodo": "atualizar",
@@ -359,7 +358,7 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                             //se o sucesso === true
                             if (response.data.success == true) {
                                 $rootScope.loadoff();
-                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'Visita desativada com sucesso!', type: "success" });
+                                SweetAlert.swal({ html: true, title: "Sucesso", text: 'Visita cancelada com sucesso!', type: "success" });
 
                                 $scope.cancelaNovo();
                                 // $scope.listarVisitantes();
@@ -373,6 +372,88 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                 }
             }
         );
+    }
+
+    $scope.historico = function (obj) {
+        var data = {
+            "metodo": "historico",
+            "data": obj,
+            "class": "visita",
+            request: 'POST'
+        };
+
+        $rootScope.loadon();
+
+        genericAPI.generic(data)
+            .then(function successCallback(response) {
+                //se o sucesso === true
+                if (response.data.success == true) {
+                    $rootScope.loadoff();
+                    $scope.modalHistorico(obj, response.data);
+                } else {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                }
+            }, function errorCallback(response) {
+                //error
+            });	
+    }
+
+    $scope.modalHistorico = function (obj, data) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/views/modal/modalHistorico.html',
+            controller: modalHistoricoCtrl,
+            size: 'lg',
+            backdrop: 'static',
+            resolve: {
+                obj: function () {
+                    return obj;
+                },
+                data: data
+            }
+        });
+
+        function modalHistoricoCtrl($scope, $uibModalInstance, obj, data) {
+            $scope.obj = obj;
+            $scope.visitas = data.data;
+            
+            $scope.ok = function (obj) {
+
+                if (obj === undefined) {
+                    SweetAlert.swal({ html: true, title: "Atenção", text: "Informe pelo menos um campo para filtrar", type: "error" });
+                    return false;
+                }
+
+                var copy = angular.copy(obj);
+                copy.valoracima = desformataValor(obj.valoracima);
+                copy.valorabaixo = desformataValor(obj.valorabaixo);
+                copy.entradaacima = desformataValor(obj.entradaacima);
+                copy.entradaabaixo = desformataValor(obj.entradaabaixo);
+                copy.parcelaacima = desformataValor(obj.parcelaacima);
+                copy.parecelaabaixo = desformataValor(obj.parecelaabaixo);
+
+                var data = { "metodo": "filtrar", "data": copy, "class": "cartacredito", request: 'GET' };
+
+                $rootScope.loadon();
+
+                genericAPI.generic(data)
+                    .then(function successCallback(response) {
+                        //se o sucesso === true
+                        if (response.data.success == true) {
+                            parentScope.cartas = response.data.data;
+                            $rootScope.loadoff();
+                            $uibModalInstance.dismiss('cancel');
+                        } else {
+                            SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                        }
+                    }, function errorCallback(response) {
+                        //error
+                    });
+
+            }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            }
+        }
     }
 
 });

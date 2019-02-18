@@ -44,7 +44,7 @@ class VisitaDAO
     //atualizar
     function atualizar (Visita $obj) {
         
-        $this->sql = sprintf("UPDATE visita SET idpessoa = %d, idtipovisita = %d, idlocal = %d, idvisitante = %d, data = '%s', horario = '%s', ativo = '%s', dataedicao = curdate() WHERE id = %d ",
+        $this->sql = sprintf("UPDATE visita SET idpessoa = %d, idtipovisita = %d, idlocal = %d, idvisitante = %d, datainicio = '%s', datafim = '%s', horario = '%s', status = '%s', dataedicao = curdate() WHERE id = %d ",
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),
             mysqli_real_escape_string($this->con, $obj->getIdtipovisita()),
             mysqli_real_escape_string($this->con, $obj->getIdlocal()),
@@ -128,7 +128,7 @@ class VisitaDAO
         from visita v
         inner join tipovisita tv on tv.id = v.idtipovisita
         inner join visitante vis on vis.id = v.idvisitante
-        where v.idpessoa = $idpessoa and curdate() between v.datainicio and ifnull(v.datafim, v.datainicio)
+        where v.idpessoa = $idpessoa and curdate() between v.datainicio and ifnull(v.datafim, v.datainicio) and v.status = 'CADASTRADO'
         -- group by vis.id
         order by v.datainicio asc, v.horario asc";
         $result = mysqli_query($this->con, $this->sql);
@@ -137,6 +137,35 @@ class VisitaDAO
 
         if(!$result) {
             $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Pessoa' , 'Listar' ) );
+        }else{
+            while($row = mysqli_fetch_assoc($result)) {
+                $controlPeriodoVisita = new PeriodovisitaControl();
+                $resp = $controlPeriodoVisita->listar($row['id']);
+                if ($resp['success'] === false) return $resp;
+
+                $row['diasperiodo'] = $resp['data'];
+                array_push($this->lista, $row);
+            }
+            $this->superdao->setSuccess( true );
+            $this->superdao->setData( $this->lista );
+        }
+        return $this->superdao->getResponse();
+
+        return $this->lista;
+    }
+
+    function historico($idvisitante)
+    {
+        $this->sql = "SELECT  * 
+        from visita v
+        where v.idvisitante = $idvisitante
+        order by v.datainicio desc";
+        $result = mysqli_query($this->con, $this->sql);
+
+        $this->superdao->resetResponse();
+
+        if(!$result) {
+            $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Visita' , 'Historico' ) );
         }else{
             while($row = mysqli_fetch_assoc($result)) {
                 $controlPeriodoVisita = new PeriodovisitaControl();
