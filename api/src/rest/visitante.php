@@ -45,20 +45,37 @@ function cadastrar () {
 	}
 
 
-    // visita
-    $visitaControl = new VisitaControl(
-        new Visita(
-            NULL, //id
-			$usuario['idpessoa'],
-			$data['idtipovisita'],
-			$usuario['idlocal'],
-			new Visitante($idvisitante),
-			NULL,
-			$data['data'],
-            $data['horario']
-        )
-    );
+	// visita
+	$objvisita = new Visita();
+	$objvisita->setIdpessoa($usuario['idpessoa'])
+			->setIdtipovisita($data['idtipovisita'])
+			->setIdlocal($usuario['idlocal'])
+			->setObjvisitante(new Visitante($idvisitante))
+			->setDatainicio($data['datainicio'])
+			->setDataFim($data['comperiodo'] ? $data['datafim'] : $data['datainicio']) // se tem periodo
+			->setHorario($data['horario']);
+    $visitaControl = new VisitaControl($objvisita);
     $response = $visitaControl->cadastrar();
+	if ($response['success']===false) die(json_encode($response));
+	$idvisita = $response['data'];
+
+	// periodo
+	if ($data['comperiodo']) {
+		foreach ($data['periodo'] as $key => $value) {
+			if ($value) {
+				$controlPeriodoVisita = new PeriodovisitaControl(
+					new Periodovisita(
+						NULL,
+						new Visita ($idvisita),
+						strtoupper($key)
+					)
+				);
+				$response = $controlPeriodoVisita->cadastrar();
+				if ($response['success']===false) die(json_encode($response));
+			}
+		}
+	}
+
 	echo json_encode($response);
 }
 function buscarPorId () {

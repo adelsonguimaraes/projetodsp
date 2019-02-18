@@ -167,6 +167,17 @@ function indefinido () {
         return input;
     }
 }
+function diasPeriodo() {
+    return function (input) {
+        var text = '';
+        for (var e of input) {
+            text += e.dia.toUpperCase().charAt(0) + e.dia.substr(1).toLowerCase() + ', ';
+        }
+        input = text.substr(0, text.length - 2);
+        if (input === '') input = 'Único';
+        return input;
+    }
+}
 
 angular
     .module(module)
@@ -193,3 +204,4 @@ angular
     .filter('aplicandoHighlighter', aplicandoHighlighter)
     .filter('aplicandoH1', aplicandoH1)
     .filter('aplicandoQuebraLinha', aplicandoQuebraLinha)
+    .filter('diasPeriodo', diasPeriodo)

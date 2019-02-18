@@ -21,8 +21,8 @@ Class PeriodovisitaControl {
 	function buscarPorId () {
 		return $this->objDAO->buscarPorId($this->obj);
 	}
-	function listar ($idpessoa) {
-		return $this->objDAO->listar($idpessoa);
+	function listar ($idvisita) {
+		return $this->objDAO->listar($idvisita);
 	}
 	function atualizar () {
 		return $this->objDAO->atualizar($this->obj);

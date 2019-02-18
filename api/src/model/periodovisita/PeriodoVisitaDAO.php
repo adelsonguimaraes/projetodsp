@@ -19,9 +19,8 @@ class PeriodovisitaDAO
        
         $this->sql = sprintf("INSERT INTO periodovisita(idvisita, dia)
         VALUES(%d, '%s')",
-            mysqli_real_escape_string($this->con, $obj->getIdvisita()),
+            mysqli_real_escape_string($this->con, $obj->getIdvisita()->getId()),
             mysqli_real_escape_string($this->con, $obj->getDia()));
-            // mysqli_real_escape_string($this->con, $obj->getAtivo()));
 
         $this->superdao->resetResponse();
 
@@ -40,7 +39,7 @@ class PeriodovisitaDAO
     function atualizar (Periodovisita $obj) {
         
         $this->sql = sprintf("UPDATE periodovisita SET idpessoa = %d, idvisita = %d, dia = '%s' WHERE id = %d ",
-            mysqli_real_escape_string($this->con, $obj->getIdvisita()),
+            mysqli_real_escape_string($this->con, $obj->getIdvisita()->getId()),
             mysqli_real_escape_string($this->con, $obj->getDia()),
             mysqli_real_escape_string($this->con, $obj->getId()));
         
@@ -111,21 +110,17 @@ class PeriodovisitaDAO
     }
 
     /* -- Listar Todos -- */
-    function listar($idpessoa)
+    function listar($idvisita)
     {
-        $this->sql = "SELECT v.*, tv.descricao as 'tipovisita', vis.nome as 'visitante', vis.documento as 'visitantedocumento'
-        from periodovisita v
-        inner join tipovisita tv on tv.id = v.idtipovisita
-        inner join visitante vis on vis.id = v.idvisitante
-        where v.idpessoa = $idpessoa and v.ativo = 'SIM'
-        -- group by vis.id
-        order by v.data asc, v.horario asc";
+        $this->sql = "SELECT * 
+        from periodovisita pv
+        where pv.idvisita = $idvisita";
         $result = mysqli_query($this->con, $this->sql);
 
         $this->superdao->resetResponse();
 
         if(!$result) {
-            $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Pessoa' , 'Listar' ) );
+            $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Periodovisita' , 'Listar' ) );
         }else{
             while($row = mysqli_fetch_assoc($result)) {
                array_push($this->lista, $row);

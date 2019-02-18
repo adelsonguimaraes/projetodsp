@@ -14,6 +14,7 @@
                         <td align="left">Data Início</td>
                         <td align="left">Data Fim</td>
                         <td align="left">Horário</td>
+                        <td>Dias do Período</td>
                         <td align="left">Visitante</td>
                         <td align="left">Documento</td>
                         <td align="left">Tipo</td>
@@ -25,6 +26,7 @@
                         <td align="leftleft">{{obj.datainicio | data}}</td>
                         <td align="leftleft">{{obj.datafim | data}}</td>
                         <td align="leftleft">{{obj.horario}}</td>
+                        <td>{{obj.diasperiodo | diasPeriodo }}</td>
                         <td align="leftleft">{{obj.visitante}}</td>
                         <td align="leftleft">{{obj.visitantedocumento}}</td>
                         <td align="leftleft">{{obj.tipovisita}}</td>
@@ -62,7 +64,6 @@
                 </tbody>
             </table>
         </div>
-        
     </section>
     <section style="padding:10px; margin-bottom: 60px;" ng-if="novo">
         <form name="cadForm">
@@ -89,25 +90,25 @@
                     <label for="nome">Data Entrada <span style="color:red;">*</span></label>
                     <input type="date" class="form-control" id="datainicio" name="datainicio" ng-model="obj.datainicio" ng-required="true">
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="comPeriodo">
                     <label for="nome">Data Saída <span style="color:red;">*</span></label>
-                    <input type="date" class="form-control" id="datainicio" name="datainicio" ng-model="obj.datainicio"
+                    <input type="date" class="form-control" id="datainicio" name="datafim" ng-model="obj.datafim"
                         ng-required="true">
                 </div>
                 <div class="form-group">
                     <label for="nome">Horário Entrada <span style="color:red;">*</span></label>
                     <input type="time" class="form-control" id="horario" name="horario" ng-model="obj.horario" ng-required="true">
                 </div>
-                <div claas="form-group">
-                    <label for="">Período</label><br>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('todo')" ng-class="{'active btn-warning': obj.periodo.todo}"><i class="fa" ng-class="{obj.periodo.todo ? 'fa-check' : 'fa-close'}"></i> Todos</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('segunda')" ng-class="{'active btn-warning': (obj.periodo.todo || obj.periodo.segunda)}">Segunda</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('terca')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.terca}">Terça</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('quarta')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.quarta}">Quarta</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('quinta')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.quinta}">Quinta</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('sexta')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.sexta}">Sexta</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('sabado')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.sabado}">Sábado</button>
-                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('domingo')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.domingo}">Domingo</button>
+                <div claas="form-group" ng-if="comPeriodo">
+                    <label for="">Dias do Período <span style="color:red;">*</span></label><br>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('todo')" ng-class="{'active btn-warning': obj.periodo.todo}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo, 'fa-close': !obj.periodo.todo}"></i> Todos</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('segunda')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.segunda}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.segunda, 'fa-close': !obj.periodo.segunda}"></i> Segunda</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('terca')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.terca}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.terca, 'fa-close': !obj.periodo.terca}"></i>Terça</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('quarta')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.quarta}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.quarta, 'fa-close': !obj.periodo.quarta}"></i> Quarta</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('quinta')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.quinta}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.quinta, 'fa-close': !obj.periodo.quinta}"></i> Quinta</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('sexta')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.sexta}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.sexta, 'fa-close': !obj.periodo.sexta}"></i> Sexta</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('sabado')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.sabado}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.sabado, 'fa-close': !obj.periodo.sabado}"></i> Sábado</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="setaPeriodo('domingo')" ng-class="{'active btn-warning': obj.periodo.todo || obj.periodo.domingo}"><i class="fa" ng-class="{'fa-check': obj.periodo.todo || obj.periodo.domingo, 'fa-close': !obj.periodo.domingo}"></i> Domingo</button>
                 </div>
                 <br>
             </section>

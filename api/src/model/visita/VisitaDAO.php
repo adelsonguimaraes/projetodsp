@@ -139,7 +139,12 @@ class VisitaDAO
             $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Pessoa' , 'Listar' ) );
         }else{
             while($row = mysqli_fetch_assoc($result)) {
-               array_push($this->lista, $row);
+                $controlPeriodoVisita = new PeriodovisitaControl();
+                $resp = $controlPeriodoVisita->listar($row['id']);
+                if ($resp['success'] === false) return $resp;
+
+                $row['diasperiodo'] = $resp['data'];
+                array_push($this->lista, $row);
             }
             $this->superdao->setSuccess( true );
             $this->superdao->setData( $this->lista );
