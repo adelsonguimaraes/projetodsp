@@ -135,7 +135,10 @@ class VisitanteDAO
     /* -- Listar Todos -- */
     function listar($idpessoa)
     {
-        $this->sql = "SELECT v.* from visitante v";
+        $this->sql = "SELECT * FROM `visitante` vt
+        INNER JOIN `visita` vs ON vs.idvisitante = vt.id
+        INNER JOIN `local` l ON l.id = vs.idlocal AND vs.idpessoa = $idpessoa
+        GROUP BY vt.id";
 
         $result = mysqli_query($this->con, $this->sql);
 

@@ -13,7 +13,17 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
         datainicio: new Date(),
         datafim: new Date(),
         horario: new Date(moment().format('YYYY-MM-DD HH:mm')),
-        
+        // periodos
+        periodo: {
+            todo: false,
+            segunda: false,
+            terca: false,
+            quarta: false,
+            quinta: false,
+            sexta: false,
+            sabado: false,
+            domingo: false
+        }
     }
 
     $scope.edicao = false;
@@ -131,6 +141,22 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                 );
             }
         }
+    }
+
+    // periodos
+    $scope.setaPeriodo = function (dia) {
+        switch (dia) {
+            case 'todo': {
+                for (var e in $scope.obj.periodo) {
+                    $scope.obj.periodo[e] = !$scope.obj.periodo.todo;
+                }
+                break;
+            }
+            default: {
+                $scope.obj.periodo[dia] = !$scope.obj.periodo[dia];
+                break;
+            }
+        };
     }
 
     $scope.cadastrar = function (obj) {

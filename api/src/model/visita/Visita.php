@@ -18,9 +18,10 @@ Class Visita implements JsonSerializable {
     private $idlocal;
     private $objvisitante;
     private $idspirit;
-    private $data;
+    private $datainicio;
+    private $datafim;
     private $horario;
-    private $ativo;
+    private $status;
     private $datacadastro;
     private $dataedicao;
 
@@ -150,9 +151,10 @@ Class Visita implements JsonSerializable {
             "idlocal"   => $this->idlocal,
             "objvisitante"   => $this->objvisitante,
             "idspirit" => $this->idspirit,
-            "data" => $this->data,
+            "datainicio" => $this->datainicio,
+            "datafim"   => $this->datafim,
             "horario"   => $this->horario,
-            "ativo" => $this->ativo,
+            "status" => $this->status,
             "datacadastro"  => $this->datacadastro,
             "dataedicao"    => $this->dataedicao
         ];
