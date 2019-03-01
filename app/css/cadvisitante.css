@@ -354,6 +354,13 @@
     flex: 1;
 }
 
+.arrows {
+    color: black;
+    padding: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 /*Rotação*/
 .spin {
 	-webkit-animation: rotation 4s infinite linear;
@@ -368,46 +375,9 @@
 }
 
 @media (min-width: 1020px) {
-    body {
-        overflow: hidden !important;
-    }
-    .main-tarefa {
-        width:400px;
-        /* position: fixed; */
-    }
-    .main-tarefa .search-box {
-        width:400px;
-    }
-    .main-tarefa .titulo {
-        width:400px;
-    }
-    .main-tarefa .tarefas {
-        height: 90vh !important;
-        /* padding-bottom: 100px; */
-        overflow: auto;
-    }
-    .main-tarefa .details {
-        width: 400px;
-    }
-    .main-tarefa .details .content .footer {
-        width: 400px;
-    }
+    
 }
 
 @media (min-width: 1250px) {
-    .main-tarefa {
-        width:450px;
-    }
-    .main-tarefa .search-box {
-        width:450px;
-    }
-    .main-tarefa .titulo {
-        width:450px;
-    }
-    .main-tarefa .details {
-        width: 450px;
-    }
-    .main-tarefa .details .content .footer {
-        width: 450px;
-    }
+    
 }
