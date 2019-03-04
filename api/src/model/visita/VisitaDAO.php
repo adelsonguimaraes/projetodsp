@@ -16,7 +16,7 @@ class VisitaDAO
 
     //cadastrar
     function cadastrar (Visita $obj) {
-       
+
         $this->sql = sprintf("INSERT INTO visita(idpessoa, idtipovisita, idlocal, idvisitante, datainicio, datafim, horario)
         VALUES(%d, %d, %d, %d, '%s', '%s', '%s')",
             mysqli_real_escape_string($this->con, $obj->getIdpessoa()),

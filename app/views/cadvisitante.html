@@ -23,13 +23,13 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="obj in visitas">
-                        <td align="leftleft">{{obj.datainicio | data}}</td>
-                        <td align="leftleft">{{obj.datafim | data}}</td>
-                        <td align="leftleft">{{obj.horario}}</td>
+                        <td align="left">{{obj.datainicio | data}}</td>
+                        <td align="left">{{obj.datafim | data}}</td>
+                        <td align="left">{{obj.horario}}</td>
                         <td>{{obj.diasperiodo | diasPeriodo }}</td>
-                        <td align="leftleft">{{obj.visitante}}</td>
-                        <td align="leftleft">{{obj.visitantedocumento}}</td>
-                        <td align="leftleft">{{obj.tipovisita}}</td>
+                        <td align="left">{{obj.visitante}}</td>
+                        <td align="left">{{obj.visitantedocumento}}</td>
+                        <td align="left">{{obj.tipovisita}}</td>
                         <td>
                             <!-- <button type="button" class="btn btn-warning" ng-click="reagendar(obj)"><i class="fa fa-calendar"></i></button> -->
                             <button type="button" class="btn btn-danger" ng-click="desativarVisita(obj)"><i class="fa fa-ban"></i></button>

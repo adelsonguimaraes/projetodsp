@@ -276,7 +276,7 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
         },
             function (isConfirm) {
                 $scope.edicao = true;
-                $scope.obj.idvisitante = obj.id;
+                $scope.obj.idvisitante = obj.idvisitante;
                 $scope.obj.nome = obj.nome;
                 $scope.obj.documento = obj.documento;
                 $scope.obj.idtipovisita = $scope.tiposvisita[0].id;
