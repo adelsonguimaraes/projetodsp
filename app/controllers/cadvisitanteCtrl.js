@@ -4,7 +4,7 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
 
     $scope.title = 'Cadastro de Visita';
     $scope.novo = false;
-
+    
     $scope.obj = {
         idvisitante: 0,
         idtipovisita: 0,
