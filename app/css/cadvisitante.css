@@ -365,6 +365,7 @@
 .spin {
 	-webkit-animation: rotation 4s infinite linear;
 }
+
 @-webkit-keyframes rotation {
     from {
             -webkit-transform: rotate(0deg);

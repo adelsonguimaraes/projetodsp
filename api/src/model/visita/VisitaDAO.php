@@ -150,8 +150,37 @@ class VisitaDAO
             $this->superdao->setData( $this->lista );
         }
         return $this->superdao->getResponse();
+    }
 
-        return $this->lista;
+    /* -- Listar Todos -- */
+    function listarTudo($idpessoa)
+    {
+        $this->sql = "SELECT v.*, tv.descricao as 'tipovisita', vis.nome as 'visitante', vis.documento as 'visitantedocumento'
+        from visita v
+        inner join tipovisita tv on tv.id = v.idtipovisita
+        inner join visitante vis on vis.id = v.idvisitante
+        where v.idpessoa = $idpessoa and v.status = 'CADASTRADO'
+        -- group by vis.id
+        order by v.datainicio asc, v.horario asc";
+        $result = mysqli_query($this->con, $this->sql);
+
+        $this->superdao->resetResponse();
+
+        if(!$result) {
+            $this->superdao->setMsg( resolve( mysqli_errno( $this->con ), mysqli_error( $this->con ), 'Visita' , 'listarTudo' ) );
+        }else{
+            while($row = mysqli_fetch_assoc($result)) {
+                $controlPeriodoVisita = new PeriodovisitaControl();
+                $resp = $controlPeriodoVisita->listar($row['id']);
+                if ($resp['success'] === false) return $resp;
+
+                $row['diasperiodo'] = $resp['data'];
+                array_push($this->lista, $row);
+            }
+            $this->superdao->setSuccess( true );
+            $this->superdao->setData( $this->lista );
+        }
+        return $this->superdao->getResponse();
     }
 
     function historico($idvisitante)

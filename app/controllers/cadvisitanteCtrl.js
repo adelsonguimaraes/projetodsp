@@ -105,6 +105,8 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
     }
     $scope.listarVisitantes();
 
+    $scope.todasVisitas = false;
+
     $scope.visitas = [];
     $scope.listarVisitas = function () {
         var data = { "metodo": "listar", "data": '', "class": "visita", request: 'GET' };
@@ -120,11 +122,37 @@ angular.module(module).controller('cadvisitanteCtrl', function ($rootScope, $sco
                 } else {
                     SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
                 }
+                $scope.todasVisitas = false;
             }, function errorCallback(response) {
                 //error
             });
     }
     $scope.listarVisitas();
+
+    $scope.visualizarTodasVisitas = function () {
+        if ($scope.todasVisitas) {
+            $scope.listarVisitas();
+        }else{
+            var data = { "metodo": "listarTudo", "data": '', "class": "visita", request: 'GET' };
+
+            $rootScope.loadon();
+
+            genericAPI.generic(data)
+                .then(function successCallback(response) {
+                    //se o sucesso === true
+                    if (response.data.success == true) {
+                        $scope.visitas = response.data.data;
+                        $rootScope.loadoff();
+                    } else {
+                        SweetAlert.swal({ html: true, title: "Atenção", text: response.data.msg, type: "error" });
+                    }
+                }, function errorCallback(response) {
+                    //error
+                });
+        }
+        // recebe o oposto
+        $scope.todasVisitas = !$scope.todasVisitas;
+    }
 
     $scope.tiposvisita = [];
     $scope.listarTipoVisitas = function () {

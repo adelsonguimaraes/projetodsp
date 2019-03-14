@@ -7,6 +7,12 @@
 
         <h4 ng-init="collapse_1=true" ng-click="collapse_1=!collapse_1">Visitas para Hoje<a class="arrows"><i class="fa" ng-class="{'fa-angle-up': collapse_1, 'fa-angle-down': !collapse_1}"></i></a></h4>
         <hr>
+        <div style="padding-bottom:10px; width: 100%; position: relative;" ng-if="collapse_1">
+            <button class="btn btn-default" ng-click="visualizarTodasVisitas()">
+                <i class="fa fa-eye"></i> 
+                {{ todasVisitas ? 'Visualizar Hoje' : 'Visualizar Tudo'}}
+            </button>
+        </div>
         <div class="table-responsive" ng-if="collapse_1">
             <table class="table table-striped table-bordered">
                 <thead>

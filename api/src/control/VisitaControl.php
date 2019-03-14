@@ -24,6 +24,9 @@ Class VisitaControl {
 	function listar ($idpessoa) {
 		return $this->objDAO->listar($idpessoa);
 	}
+	function listarTudo ($idpessoa) {
+		return $this->objDAO->listarTudo($idpessoa);
+	}
 	function historico ($idvisitante) {
 		return $this->objDAO->historico($idvisitante);
 	}

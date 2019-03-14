@@ -14,6 +14,9 @@ switch ($_POST['metodo']) {
 	case 'listar':
 		listar();
 		break;
+	case 'listarTudo':
+		listarTudo();
+		break;
 	case 'historico':
 		historico();
 		break;
@@ -59,6 +62,14 @@ function listar () {
 
 	$control = new VisitaControl();
 	$lista = $control->listar($usuario['idpessoa']);
+	echo json_encode($lista);
+}
+function listarTudo () {
+	$data = $_POST['data'];
+	$usuario = $_POST['usuario'];
+
+	$control = new VisitaControl();
+	$lista = $control->listarTudo($usuario['idpessoa']);
 	echo json_encode($lista);
 }
 function historico () {

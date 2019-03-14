@@ -62,7 +62,7 @@ function cadastrar () {
 	// periodo
 	if ($data['comperiodo']) {
 		foreach ($data['periodo'] as $key => $value) {
-			if ($value) {
+			if ($key!=="todo") {
 				$controlPeriodoVisita = new PeriodovisitaControl(
 					new Periodovisita(
 						NULL,
